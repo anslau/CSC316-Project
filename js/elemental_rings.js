@@ -1,18 +1,16 @@
 
+(function loadData() {
+    d3.json("data/character_data.json"). then(data=>{
+        
+        // draw chart
+		// areachart = new ElementalRings("frame3", data["Katara"])
+        // areachart.initVis()
+    });
+})();
+
 const elements = ["Water", "Fire", "Earth", "Air"]
-
-/*
- * ElementalRings - ES6 Class
- * @param  parentElement 	-- the HTML element in which to draw the visualization
- * @param  data             -- the data the that's provided initially
- * @param  displayData      -- the data that will be used finally (which might vary based on the selection)
- *
- * @param  focus            -- a switch that indicates the current mode (focus or stacked overview)
- * @param  selectedIndex    -- a global 'variable' inside the class that keeps track of the index of the selected area
- */
-
 class ElementalRings {
-
+	
 // constructor method to initialize ElementalRings object
 constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 	this.parentElement = parentElement;
@@ -49,27 +47,34 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 		this.colorScale[i] = d3.scaleOrdinal()
 			.domain(this.dataCategories[i])
 			.range(colorArray);
-		}
+	}
 }
 
 	/*
 	 * Method that initializes the visualization (static content, e.g. SVG area or axes)
  	*/
 	initVis(){
-
+		
 		let vis = this;
 		vis.margin = {top: 40, right: 40, bottom: 60, left: 40};
-
-		vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
-		vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
+		vis.width = 800;
+		vis.height = 800;
 
 		// SVG drawing area
-		vis.svg = d3.select("#" + vis.parentElement).append("svg")
+		vis.svg = d3.select("#" + vis.parentElement)
+			.append("svg")
 			.attr("width", vis.width + vis.margin.left + vis.margin.right)
 			.attr("height", vis.height + vis.margin.top + vis.margin.bottom)
 			.append("g")
 			// position vis origin at centre of svg
-			.attr("transform", `translate(${vis.width/2 + vis.margin.left}, ${vis.height/2 + vis.margin.top})`);
+			.attr("transform", `translate(${vis.width/2 + vis.margin.left}, ${vis.height/2 + vis.margin.top})`)
+		
+		
+		const container = document.getElementById(vis.parentElement);
+		container.style.overflow = "auto"; 
+		container.style.backgroundColor = "#1a1a2e";
+		container.style.flex = "0 0 auto"; 
+	
 
 		// attatch tooltip
 		vis.tooltip = vis.svg.append("text")
@@ -78,6 +83,7 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 			// position top right of ring
     		.attr("x", vis.width / 4)                   
     		.attr("y", -vis.height/2)
+			.attr("fill", "white")
 		
 		
 		vis.initRings() // draw each elemental ring
@@ -92,7 +98,6 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 	 */
 	initRings() {
 		let vis = this
-
 		
 		for (let i = 0; i < 4; i++) {
 			vis.radius[i] = d3.scaleSqrt()
@@ -176,17 +181,19 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 	updateVis(){
 		let vis = this;
 
+		// get the max domain of all 4 rings
+		const globalMax = d3.max(vis.displayData, element =>
+  		d3.max(element, d =>
+    		d3.max(d, e => e[1])
+  		));
+
+		// set radius range based on domain of all 4 rings
+		vis.radius.forEach(r => {
+			r.domain([0, globalMax]);
+		});
+
 		// draw each ring
 		for (let i = 0; i < 4; i++) {
-
-			// Update domain
-			// Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
-			vis.radius[i].domain([0, d3.max(vis.displayData[i], function(d) {
-				return d3.max(d, function(e) {
-					return e[1];
-				});
-			})
-			]);
 
 			let categories = vis.svg.selectAll(`.ring${i}`)
 								.data(vis.displayData[i])  
