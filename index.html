@@ -14,34 +14,34 @@
     <title>CSC316 PROJECT </title>
 </head>
 <body>
-    
-<div class="container-fluid">
 
-    <!-- Add other frames as rows -->
+<!-- load boostrap script-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <!-- Frame 3_1 -->
-    <div class="row">
-        <div class="col-md-8 offset-2"
-             style="margin-top: 5vh; border: thin solid grey; border-radius: 5px; background: rgba(221,221,221,0.45)">
 
-            <!-- graph -->
-            <div class="row justify-content-center" style="height: 100vh">
-                <div class="align-self-center" id="frame3_1" style="height: 100%; width: 100%"></div>
-            </div>
+<!-- containers for the visualization, one div per frame  -->
+<div class="canvas" id="frame1"></div>
 
-        </div>
-    </div>
+<div class="canvas" id="frame2"></div>
 
-</div>
+<div class="canvas" id="frame3"></div>
 
-<!-- Visualization objects -->
-<script src="js/elementalRings.js"></script>
+<div class="canvas" id="frame3_1"></div>
+
+<div class="canvas" id="frame4"></div>
+
+<div class="canvas" id="frame5"></div>
+
+<div class="canvas" id="frame6"></div>
+
 
 <!-- Load D3 -->
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 <!-- TODO: implementation scripts -->
-<script src="js/main.js"></script>
+<!--<script src="js/main.js"></script>-->
+<script src="js/frame3_1_moral_ring.js"></script>
+
 
 </body>
 </html>
