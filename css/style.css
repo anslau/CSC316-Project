@@ -25,3 +25,8 @@ body {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   border-radius: 12px;
 }
+
+#frame3_1 {
+    overflow-x: auto;
+    overflow-y: auto;
+}
