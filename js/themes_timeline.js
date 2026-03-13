@@ -1,15 +1,3 @@
-/**
- * themes_timeline.js
- *
- * Usage:
- *   <script src="js/themes_timeline.js"></script>
- *   <script src="js/themes.js"></script>   ← contains: new Timeline(data, {mountId:"frame6"}).initVis()
- *
- * Expects your CSS file to style:
- *   #atla-subtitle, #atla-filters, .atla-btn, .atla-btn.active, .atla-btn.inactive,
- *   #atla-vis, #atla-tooltip, #atla-tooltip.visible, .atla-tt-inner,
- *   #atla-tt-label, #atla-tt-title, #atla-tt-themes, #atla-tt-desc
- */
 
 class Timeline {
 
@@ -210,7 +198,6 @@ class Timeline {
             .attr("viewBox", `0 0 ${this.W} ${this.H}`)
             .attr("preserveAspectRatio", "xMidYMid meet")
             .style("width", "100%")
-            .style("height", "500px");
 
 
         this.svg.append("text")
@@ -222,7 +209,7 @@ class Timeline {
             .attr("font-size", 40)
             .attr("fill", "#5a3e22")
             .attr("opacity", 0.75)
-            .text("Thematic weight across the seasons");
+            .text("Thematic Weight Across The Show");
     }
 
 
@@ -254,7 +241,7 @@ class Timeline {
             const x1 = x(d3.max(chapters, d => d.globalChapter) + 0.5);
             const bc = Timeline.BOOK_COLORS[book];
 
-            // tinted background rect
+            // tinted background
             svg.append("rect")
                 .attr("x", x0).attr("y", margin.top - 10)
                 .attr("width", x1 - x0)
@@ -267,7 +254,7 @@ class Timeline {
                 .attr("text-anchor", "middle")
                 .attr("font-size", 11).attr("fill", bc.label).attr("opacity", 0.8)
                 .attr("font-family", "Philosopher, serif")
-                .text(`Book ${book}`);
+                .text(`Book: ${book}`);
 
             // separator line between books
             if (book !== "Fire") {
@@ -427,10 +414,11 @@ class Timeline {
                 const visibleDot = overlay.append("circle")
                     .attr("cx", fx).attr("cy", py)
                     .attr("r", 5)
-                    .attr("fill", t.color).attr("opacity", 0.5)
+                    .attr("fill", t.color)
+                    .attr("opacity", 0.5)
                     .style("pointer-events", "none");
 
-                // per season invisible dot for tooltip hover
+                //  invisible hover dots
                 overlay.append("circle")
                     .attr("cx", fx).attr("cy", py)
                     .attr("r", 8)
