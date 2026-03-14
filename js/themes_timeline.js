@@ -92,12 +92,12 @@ class Timeline {
             episode: "Sozin's Comet, Part 4",
             desc: "In the final showdown, old foes meet in battle for the last time and Aang must decide if he is willing to compromise his morals for the sake of restoring peace.",
             quotes: {
-                war:        "'Fire Lord Ozai, you and your forebears have devastated the balance of this world. Now you shall pay the ultimate price.'\n" +
-                            "'Even if I did defeat him, I don't know if I could take a life. I just don't think I can.'",
+                war:        "'Fire Lord Ozai, you and your forebears have devastated the balance of this world. Now you shall pay the ultimate price.'\n",
                 balance:    "'The true mind can weather all the lies and illusions without being lost. The true heart can tough the poison of hatred without being harmed. Since beginning-less time, darkness thrives in the void, but always yields to purifying light'",
-                destiny:    "'The monks used to say that revenge is like a two-headed rat viper. While you watch your enemy go down, you're being poisoned yourself.'",
+                destiny:    "'Even if I did defeat him, I don't know if I could take a life. I just don't think I can.'",
                 redemption: "'It’s easy to do nothing, it’s hard to forgive.'",
             }
+            // 'The monks used to say that revenge is like a two-headed rat viper. While you watch your enemy go down, you're being poisoned yourself.'
         },
     };
 
