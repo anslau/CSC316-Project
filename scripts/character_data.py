@@ -18,7 +18,8 @@ import pandas as pd
 # -----------------------------
 CSV_PATH = "../data/raw/avatar.csv"
 OUTPUT_PATH = "../data/processed/character_traits.json"
-RELEVANT_CHARACTERS = { "Aang", "Sokka", "Katara", "Zuko", "Suki", "Toph"}
+RELEVANT_CHARACTERS = { "Aang", "Katara", "Sokka", "Toph", "Zuko", "Iroh", "Azula", "Zhao", "Roku", "Suki", "Jet"}
+
 IGNORE_WORDS = {
     "back", "away", "again", "still", "up", "down", "around", "forward", "slightly", "somewhat", "further",
     "upward", "closer", "far", "anyway", "voiceover", "motionless", "nearby", "offcamera", "beside", "once",

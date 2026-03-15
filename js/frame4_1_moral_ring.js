@@ -91,11 +91,11 @@
 
     // left column for characters / ring type selection
 		const leftCol = row.append("div")
-			.attr("class", "col-md-1 d-flex flex-column justify-content-center text-center");
+			.attr("class", "col-md-1 d-flex text-center")
 
 		// toggle ring type pannel
 		const pannel = leftCol.append("div")
-			.attr("class", "d-flex flex-column justify-content-center align-items-center gap-4");
+			.attr("class", "d-flex flex-column justify-content-center align-items-center gap-4")
 
 		// center for main ring viz
 		const centre = row.append("div")
@@ -348,8 +348,7 @@
       });
 
       const characters = Array.from(new Set(raw.map(d => d.character)))
-        .filter(Boolean)
-        .sort(d3.ascending);
+        .filter(Boolean);
 
       const totalChaps = d3.max(raw, d => d.chap_global) || 61;
 
@@ -426,7 +425,9 @@
       
       // Build left-side character buttons
 			const buttonWrap = pannel.append("div")
-			.attr("class", "col-auto d-flex flex-column");
+			.attr("class", "col-auto d-flex flex-column scrollbox")
+      .style("max-height", "70vh")
+      .style("overflow-y", "auto");
 
 			const buttons = buttonWrap.selectAll("div.char-btn")
 				.data(characters)
