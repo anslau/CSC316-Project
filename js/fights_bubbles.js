@@ -289,8 +289,69 @@ const manualPositions = {
   }
 };
 
+// Intro text
+const introBlock = d3.select('#frame3')
+    .append('div')
+    .attr('class', 'frame3-intro')
+    .style('max-width', '1200px')
+    .style('margin', '0 auto 22px auto')
+    .style('padding', '0 20px')
+    .style('text-align', 'center')
+    .style('color', '#2c1f0e');
+
+introBlock.append('h2')
+    .style('margin', '0 0 10px 0')
+    .attr("font-family", "Philosopher, serif")
+    .attr("font-style", "italic")
+    .style('font-size', '40px')
+    .attr("fill", "#5a3e22")
+    .style('font-weight', 'normal')
+    .style('letter-spacing', '0.05em')
+    .text('Conflict Across Avatar');
+
+introBlock.append('p')
+    .style('margin', '0 auto')
+    .style('max-width', '900px')
+    .style('font-family', "'Philosopher', serif")
+    .style('font-size', '20px')
+    .style('line-height', '1.7')
+    .text(`While elemental bending is one
+        of the most recognizable    
+        aspects of Avatar: The Last
+        Airbender, it also reflects
+        deeper tensions between
+        characters and nations. The
+        previous visualization showed
+        how often the elements are
+        referenced throughout the
+        series, highlighting how
+        bending shapes the world of
+        the show. However, references
+        to elements alone do not
+        capture the conflicts that
+        drive the story forward. The
+        visualization on the left
+        shows how fights occur in each
+        book (season), illustrating
+        how conflict develops across
+        the series. These fights mark
+        important narrative moments
+        where personal rivalries and
+        political tensions escalate.
+        The character network on the
+        right shifts the focus from
+        when fights happen to who they
+        happen between, revealing how
+        conflict is distributed across
+        recurring rivalries and
+        relationships.`);
+
+const vizRow = d3.select('#frame3')
+    .append('div')
+    .attr('class', 'frame3-viz-row');
+
 // Create separate container for map
-const mapContainer = d3.select('#frame3')
+const mapContainer = vizRow
     .append('div')
     .attr('id', 'map-container');
 

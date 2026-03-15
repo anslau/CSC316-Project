@@ -23,9 +23,9 @@ let linkElements;
 
 function createCharacterNetwork(fightsData) {
 
-    const networkContainer = d3.select('#frame3')
-        .append('div')
-        .attr('id', 'network-container');
+    const networkContainer = d3.select('.frame3-viz-row')
+    .append('div')
+    .attr('id', 'network-container');
 
     const networkSvg = networkContainer
         .append('svg')
