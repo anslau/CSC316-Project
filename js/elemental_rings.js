@@ -170,9 +170,10 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 						.data([])
 						.exit()
 						.transition()
-						.duration(500)
+						.duration(100)
 						.style("opacity", 0)
 						.remove();
+						
 			}
 
 			// erase ring outlines and label
@@ -180,6 +181,7 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 			vis.ringLabel.attr("opacity", 0)
 		}
 
+		// draw all ring elements while unfocusing elemIndex
 		var allElements = function(elemIndex) {
 
 			// get the max domain of all 4 rings
@@ -234,11 +236,11 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 							.style("top", event.pageY + "px")
 							.html(`
 								<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-									<h1>Character: ${vis.character}
-									<h3>Trait: ${d.key}<h3>    
-									<h4>Count: ${yValue}<h4> 
-									<h4>Book: ${chapterIndex === 60 ? 3 : Math.floor(chapterIndex / 20) + 1}<h4>  
-									<h4>Chapter: ${chapterIndex === 60 ? 21 : chapterIndex % 20 + 1}<h4>              
+									<h4>Character: ${vis.character}
+									<h6>Trait: ${d.key}<h3>    
+									<h6>Count: ${yValue}<h4> 
+									<h6>Book: ${chapterIndex === 60 ? 3 : Math.floor(chapterIndex / 20) + 1}<h4>  
+									<h6>Chapter: ${chapterIndex === 60 ? 21 : chapterIndex % 20 + 1}<h4>              
 								</div>`);
 					})	
 					.on('mouseout', function(event, d){
@@ -253,7 +255,7 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 							.html(``);
 					})
 					.on('click', function(event, d) {
-						focusElement(this.className["animVal"].charAt(4));
+						focusElement(parseInt(this.className["animVal"].charAt(4)));
 					})
 					.transition()
 					.duration(500)
@@ -263,7 +265,8 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 				categories.exit().remove();
 			}
 
-			if (elemIndex) {
+			// unfocus element
+			if (elemIndex !== undefined) {
 				drawRing(elemIndex)
 			}
 
@@ -274,7 +277,8 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 					continue
 				// stagger start time between layers
 				((i) => {
-					setTimeout(() => {drawRing(i)},
+					setTimeout(() => {
+						drawRing(i)},
 					// skip elemIndex layer if already drawn, and wait for elemIndex to be drawn
 					((elemIndex && (i > elemIndex) ? i - 1 : i) * 300) + (elemIndex ? 500: 0)); 
 				})(i);

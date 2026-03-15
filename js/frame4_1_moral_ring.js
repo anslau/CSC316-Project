@@ -55,7 +55,35 @@
 
 		// Add left-right margins using container
 		const container = mount.append("div")
-			.attr("class", "container position-relative");
+			.attr("class", "container position-relative p-5")
+      .style("background-color", "var(--parchment)")
+      .style("border-radius", "8px");
+
+    // vis description
+    const description = container.append("div")
+        .style("border", "1px solid var(--ink-faded)")
+        .style("border-radius", "8px")
+        .style("padding", "8px 12px")
+        .style("color", "var(--ink-faded)")
+        .style("font-family", "'Papyrus', 'Times New Roman', serif")
+        .style("font-size", "14px")
+        .style("box-shadow", "2px 2px 6px rgba(0,0,0,0.2)")
+        .style("max-width", "800px")
+        .style("margin", "0 auto")
+        .style("text-align", "center")
+        .text(`Characters display a wide range of traits across each nation,
+               and contribute to the core themes throughout the story.
+               Select characters, toggle between "Theme" and "Trait" visualizations, and hover data
+               segmenets to show more information.`);
+
+    // Title
+		container.append("div")
+		  .attr("class", "row mb-2 pt-4")
+      .append("div")
+      .attr("class", "col text-center") 
+      .append("h2")
+      .text("Characters Grow Throughout the Show")
+      .style("color", "var(--ink)");
 
 		// Bootstrap row
 		const row = container.append("div")
@@ -116,7 +144,7 @@
         .each(function(d) {
             d3.select(this)
               .append("div")
-              .attr("class", "element-annotation text-center")
+              .attr("class", "annotation text-center")
               .html(`<strong>${d.name}</strong><br>${d.text}`)
               // Apply element-specific colors
               .style("background-color", d.bg)
@@ -125,7 +153,7 @@
         });
 
     // annotation styling
-    container.selectAll(".element-annotation")
+    container.selectAll(".annotation")
         .style("border-radius", "8px")
         .style("padding", "8px 12px")
         .style("font-family", "'Papyrus', 'Times New Roman', serif")
@@ -135,16 +163,14 @@
         .style("margin", "0 auto")
         .style("text-align", "center");
 
-		// Title
-		centre.append("div")
-		  .attr("class", "fw-semibold mb-2 pt-4")
-		  .style("font-size", "18px")
-		  .text("Characters Grow Throughout the Show");
-
 		// SVG
 		const svg = centre.append("svg")
 			.attr("width", WIDTH)
-			.attr("height", HEIGHT);
+			.attr("height", HEIGHT)
+      .attr("viewBox", `0 0 ${WIDTH} ${HEIGHT}`)  // preserves aspect ratio
+      .attr("preserveAspectRatio", "xMidYMid meet") // keep ratio, center it
+      .style("background-color", "var(--parchment)")
+      .style("display", "block"); 
 
 		// Tooltip (absolute within container)
 		const tooltip = container.append("div")
@@ -163,51 +189,49 @@
   // updateMoral - function to update moral rings
   // moralGroup - drawing area of moral rings
   function renderToggle(svg, toggle_g, elementalRings, updateMoral, moralGroup) {
-    const toggleButtons = [
-      { text: "Theme", type: "moral" },
-      { text: "Trait", type: "trait" }
-    ];
+	const toggleButtons = [
+		{ text: "Theme", type: "moral" },
+		{ text: "Trait", type: "trait" }
+	];
 
-    toggleButtons.forEach(d => {
+	toggleButtons.forEach(d => {
+		// "trait" selected by default
+		const isActive = d.type === "trait";
 
-    // "trait" is selected by default
-    const initialClass = d.type === "trait" ? "btn btn-sm btn-primary me-2 mt-4"
-                                            : "btn btn-sm btn-outline-secondary me-2 mt-4";
+		const btn = toggle_g.append("button")
+			.text(d.text)
+			.attr("class", "atla-btn")
+			.classed("inactive", !isActive)  // inactive class if not selected
+      .style("color", "var(--ink-faded)")
+      .style("width", "100%") 
+			.on("click", () => {
+				// reset all buttons
+				toggle_g.selectAll("button")
+					.classed("inactive", true);
 
-    const btn = toggle_g.append("button")
-        .text(d.text)
-        .attr("class", initialClass)
-        .on("click", () => {
-        
-          // reset all buttons
-          toggle_g.selectAll("button")
-            .classed("btn-primary", false)
-            .classed("btn-outline-secondary", true);
+				// highlight clicked button
+				btn.classed("inactive", false);
 
-          // highlight clicked button
-          btn.classed("btn-primary", true)
-              .classed("btn-outline-secondary", false);
-
-          // switch visualizations
-          if (d.type === "moral") {
-            ringType = "moral";
-            elementalRings.wrangleData(null);
-            updateMoral(selectedCharacter);
-            moralGroup.attr("display", "");
-            svg.selectAll(".legend").attr("opacity", 1);
-            d3.selectAll(".element-annotation")
-              .style("display", "none")
-          } else {
-            ringType = "trait";
-            elementalRings.wrangleData(prettyChar(selectedCharacter));
-            moralGroup.attr("display", "none");
-            svg.selectAll(".legend").attr("opacity", 0);
-            d3.selectAll(".element-annotation")
-            .style("display", "")
-          }
-        });
-    });
-  }
+				// switch visualizations
+				if (d.type === "moral") {
+					ringType = "moral";
+					elementalRings.wrangleData(null);
+					updateMoral(selectedCharacter);
+					moralGroup.attr("display", "");
+					svg.selectAll(".legend").attr("opacity", 1);
+					d3.selectAll(".annotation")
+						.style("display", "none");
+				} else {
+					ringType = "trait";
+					elementalRings.wrangleData(prettyChar(selectedCharacter));
+					moralGroup.attr("display", "none");
+					svg.selectAll(".legend").attr("opacity", 0);
+					d3.selectAll(".annotation")
+						.style("display", "");
+				}
+			});
+	});
+}
   
   // render chart legend 
   function renderLegend(g) {
@@ -344,18 +368,22 @@
       // Background
       g.append("circle")
         .attr("r", Math.min(WIDTH, HEIGHT) / 2 - margin)
-        .attr("fill", "white")
+        .attr("fill", "var(--parchment-lt)")
         .attr("stroke", "#e5e5e5");
 
       // toggle panel group
       const toggle_g = pannel.append("div")
-			                  .attr("class", "d-flex flex-column justify-content-center align-items-center")
+			                  .attr("class", "pannel")
+                        .style("display", "flex")
+                        .style("flex-direction", "column")
+                        .style("gap", "8px");
 
       renderLegend(g);
       renderBookDividers(g, totalChaps);
 
       // Center label
       const centerLabel = g.append("text")
+        .attr("class", "h2")
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
         .style("font-size", "18px")
@@ -368,7 +396,7 @@
         .attr("y", 18)
         .style("font-size", "12px")
         .style("fill", "#666")
-        .text("Hover segments for details");
+        .text("Hover for details");
 
       // Ring radii
       const rOuterAll = Math.min(WIDTH, HEIGHT) / 2 - margin - 20;
@@ -405,16 +433,18 @@
 				.enter()
 				.append("div")
 				.attr("class", "col text-center char-btn")
+        .style("padding", "8px");
 
       // Circle placeholder (later you can put image inside)
 			buttons.append("div")
-				.attr("class", "char-circle mx-auto")
+				.attr("class", "char-circle mx-auto atla-btn")
 				.style("width", "64px")
 				.style("height", "64px")
 				.style("border-radius", "50%")
 				.style("background", "#d9d9d9")
-				.style("border", "2px solid transparent");
-
+				.style("border", "2px solid transparent")
+        .style("margin-top", "4px")
+        
       buttons.append("div")
         .attr("class", "char-name")
         .style("font-size", "13px")
@@ -428,7 +458,14 @@
 					event.stopPropagation();
           selectedCharacter = c
 					setActive(c);
-				});
+				})
+        .on("mouseover", function() {
+            d3.select(this).style("border", "2px solid var(--ink-ghost)")
+                           .style("border-radius", "25%");
+        })
+        .on("mouseout", function() {
+            d3.select(this).style("border", "none")
+        });
 
       function setActive(character) {
         // Visual highlight on left buttons
