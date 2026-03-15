@@ -176,7 +176,7 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 			}
 
 			// erase ring outlines and label
-			vis.ringOutlines.forEach(r => r.attr("opacity", 0))
+			vis.ringOutlines.forEach(r => r.attr("opacity", 0).attr("stroke", "#b9c754"))
 			vis.ringLabel.attr("opacity", 0)
 		}
 
@@ -243,8 +243,8 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 					})	
 					.on('mouseout', function(event, d){
 						// unhighlight element
-						vis.ringOutlines[i].attr("stroke", "b9c754")
-						vis.ringOutlines[i + 1].attr("stroke", "b9c754")
+						vis.ringOutlines[i].attr("stroke", "#b9c754")
+						vis.ringOutlines[i + 1].attr("stroke", "#b9c754")
 
 						vis.tooltip
 							.style("opacity", 0)
@@ -340,6 +340,7 @@ constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) 
 						.html(``);
 				})
 				.on('click', function(event, d) {
+					vis.ringOutlines[4].attr("stroke", "#b9c754");
 					allElements(elemIndex)
 				})
 				.transition()
