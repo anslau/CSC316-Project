@@ -381,21 +381,20 @@
       renderBookDividers(g, totalChaps);
 
       // Center label
-      const centerLabel = g.append("text")
-        .attr("class", "h2")
-        .attr("text-anchor", "middle")
-        .attr("dominant-baseline", "middle")
-        .style("font-size", "18px")
-        .style("font-weight", "600")
-        .text("");
+      const centerLabel = g.append("image")
+        .attr("x", -80)  
+        .attr("y", -80)     
+        .attr("width", 160)  
+        .attr("height", 160)
+        .attr("preserveAspectRatio", "xMidYMin meet")
 
-      g.append("text")
-        .attr("text-anchor", "middle")
-        .attr("dominant-baseline", "hanging")
-        .attr("y", 18)
-        .style("font-size", "12px")
-        .style("fill", "#666")
-        .text("Hover for details");
+      // g.append("text")
+      //   .attr("text-anchor", "middle")
+      //   .attr("dominant-baseline", "hanging")
+      //   .attr("y", 18)
+      //   .style("font-size", "12px")
+      //   .style("fill", "#666")
+      //   .text("Hover for details");
 
       // Ring radii
       const rOuterAll = Math.min(WIDTH, HEIGHT) / 2 - margin - 20;
@@ -435,6 +434,7 @@
 				.append("div")
 				.attr("class", "col text-center char-btn")
         .style("padding", "8px");
+      
 
       // Circle placeholder (later you can put image inside)
 			buttons.append("div")
@@ -442,10 +442,17 @@
 				.style("width", "64px")
 				.style("height", "64px")
 				.style("border-radius", "50%")
-				.style("background", "#d9d9d9")
+				.style("background", "white")
 				.style("border", "2px solid transparent")
         .style("margin-top", "4px")
-        
+        .append("img")
+        .attr("src", d => `img/${d}.png`) 
+        .style("width", "100%")            // scale width
+        .style("height", "100%")           // scale height
+        .style("display", "block")
+        .style("object-fit", "contain")    // show entire image
+        .style("object-position", "top center"); 
+
       buttons.append("div")
         .attr("class", "char-name")
         .style("font-size", "13px")
@@ -478,7 +485,9 @@
           .select(".char-circle")
           .style("border-color", "#333");
 
-        centerLabel.text(prettyChar(character));
+        centerLabel.text(prettyChar(character))
+                    .attr("href", `img/${character}.png`)
+
         if (ringType === "trait") {
             updateTrait(character);
         }
