@@ -159,6 +159,25 @@ svg {
 	}
 }
 
+/* Frame 4: Character */
+#frame4_1 {
+    font-family: 'Uncial Antiqua', cursive;
+}
+
+.scrollbox::-webkit-scrollbar {
+  width: 0px;
+}
+
+.scrollbox:hover::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbox::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.35);
+  border-radius: 6px;
+}
+
+
 /* Frame 6: Theme Timeline  */
 
 #frame6 {

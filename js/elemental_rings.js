@@ -1,24 +1,22 @@
-
 const elements = ["Water", "Fire", "Earth", "Air"]
-
-/*
- * ElementalRings - ES6 Class
- * @param  parentElement 	-- the HTML element in which to draw the visualization
- * @param  data             -- the data the that's provided initially
- * @param  displayData      -- the data that will be used finally (which might vary based on the selection)
- *
- * @param  focus            -- a switch that indicates the current mode (focus or stacked overview)
- * @param  selectedIndex    -- a global 'variable' inside the class that keeps track of the index of the selected area
- */
-
+const ringGap = 1
 class ElementalRings {
-
+	
 // constructor method to initialize ElementalRings object
-constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
-	this.parentElement = parentElement;
-	this.data = data;
-	this.innerRadius = innerRadius; // of innermost ring
-	this.ringWidth = ringWidth; // width of each ring
+constructor(fullData, svg, width, height, innerRadius = 100, outerRadius = 320) {
+
+	this.fullData = fullData
+	this.data = fullData["Sokka"];
+
+	this.innerRadius = innerRadius + ringGap; // of innermost ring
+	this.outerRadius = outerRadius
+	this.ringWidth = (outerRadius - 4 * ringGap) / 4; // width of each ring
+	this.ringOutlines = [] // borders between rings
+	this.ringLabel = 0 // the max frequency count of each ring layer
+
+	this.svg = svg;
+	this.width = width;
+	this.height = height;
 
 	// attributes per ring
 	this.displayData = [];
@@ -33,6 +31,7 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 	let earthColors = ['#bfb198', '#b09f7f', '#a18d66', '#927c50', '#846b3d', '#76592f', '#664d28','#58421f','#493617', '#3c2b0f'];
 	let fireColors = ['#8b0000', '#990000', '#a60000', '#b30000', '#bf1a00','#cc3300','#d94c00', '#e66400', '#f07f00', '#ff9900'];
 	let airColors = ['#b7e7ed', '#a3e9ea', '#85ede8', '#7ae6e2', '#70dedc', '#64d5d4','#59ccc9', '#4fc2bf', '#44b8b4', '#3daeaa'];
+
 	this.colorScale = [waterColors, fireColors, earthColors, airColors]
 
 	// initialize categories and colour scale for each element
@@ -49,56 +48,63 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 		this.colorScale[i] = d3.scaleOrdinal()
 			.domain(this.dataCategories[i])
 			.range(colorArray);
-		}
+	}
+
 }
 
 	/*
 	 * Method that initializes the visualization (static content, e.g. SVG area or axes)
  	*/
 	initVis(){
-
+		
 		let vis = this;
 		vis.margin = {top: 40, right: 40, bottom: 60, left: 40};
+		vis.width = 800;
+		vis.height = 800;
 
-		vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
-		vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
+		vis.tooltip = d3.select("body").append('div')
+			.attr('class', "tooltip")
+			.attr('id', 'elementalRingsTooltip')
+			.style("position", "absolute")
+			.style("opacity", 0)
+			.style("pointer-events", "none");
 
-		// SVG drawing area
-		vis.svg = d3.select("#" + vis.parentElement).append("svg")
-			.attr("width", vis.width + vis.margin.left + vis.margin.right)
-			.attr("height", vis.height + vis.margin.top + vis.margin.bottom)
-			.append("g")
-			// position vis origin at centre of svg
-			.attr("transform", `translate(${vis.width/2 + vis.margin.left}, ${vis.height/2 + vis.margin.top})`);
+		// initialize ring outlines and labels
+		for (let i = 0; i < 5; i++) {
+			vis.ringOutlines[i] = vis.svg.append("circle")
+				.attr("cx", 0)
+				.attr("cy", 0)
+				.attr("r", vis.innerRadius + vis.ringWidth * i) 
+				.attr("stroke", "#b9c754") 
+				.attr("fill", "none")
+				.attr("stroke-width", 1)
+				.attr("opacity", 0)
+		}
 
-		// attatch tooltip
-		vis.tooltip = vis.svg.append("text")
-			.attr("class", "tooltip")
-    		.attr("text-anchor", "middle")
-			// position top right of ring
-    		.attr("x", vis.width / 4)                   
-    		.attr("y", -vis.height/2)
-		
-		
-		vis.initRings() // draw each elemental ring
-		vis.drawXAxis() // draw x axis for chapters
-
-		vis.wrangleData()
+		vis.ringLabel = vis.svg.append("text")
+			.attr("x", 0)
+			.attr("y", - (vis.innerRadius + vis.ringWidth * 4) - 4)
+			.attr("width", 40)
+			.attr("text-anchor", "middle")
+			.attr("font-size", "11px")
+			.attr("fill", "#999");
 		
 	}
     /**
 	 * Initializes each ring within the same svg element.
 	 * Sets up scales, data, and chart generator.
+	 * Different scales per character
 	 */
 	initRings() {
 		let vis = this
-
 		
 		for (let i = 0; i < 4; i++) {
+			// Radius scale
 			vis.radius[i] = d3.scaleSqrt()
-				.range([vis.innerRadius + vis.ringWidth*i, vis.innerRadius + vis.ringWidth*(i+1)]);
+				.range([vis.innerRadius + vis.ringWidth*i + ringGap*(i + 1), 
+						vis.innerRadius + vis.ringWidth*(i+1), + ringGap*(i+2)]);
 		
-			// Angle scale (map chapters to 0 → 2π)
+			// Angle scale (same for all rings)
 			vis.angle[i] = d3.scaleLinear()
 				.domain(d3.extent(vis.data[elements[i]], d => d.chap))
 				.range([0, 2 * Math.PI]);
@@ -108,65 +114,46 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
 				.keys(vis.dataCategories[i]);
 
 			vis.stackedData[i] = stack(vis.data[elements[i]]);
-
+		
 			// Radial area generator
 			vis.radialArea[i] = d3.areaRadial()
 				.angle(d => vis.angle[i](d.data.chap))
 				.innerRadius(d => vis.radius[i](d[0]))
 				.outerRadius(d => vis.radius[i](d[1]))
 				.curve(d3.curveCardinal);
-			}
-	}
+		}
 
-	/**
-	 * Draws the x-axis for chapters inwards along innermost ring
-	 */
-	drawXAxis() {
-		let vis = this
-
-		// Choose ticks
-		let ticks = vis.angle[0].ticks(vis.data.length); 
-		let axisRadius = vis.innerRadius;
-		let tickLength = 5;
-
-		// Create group for axis
-		let xAxisGroup = vis.svg.append("g")
-			.attr("class", "x-axis");
-
-		// Draw ticks
-		xAxisGroup.selectAll("line")
-				.data(ticks)
-				.enter()
-				.append("line")
-				.attr("x1", d => axisRadius * Math.cos(vis.angle[0](d) - Math.PI/2))  // outer point
-				.attr("y1", d => axisRadius * Math.sin(vis.angle[0](d) - Math.PI/2))
-				.attr("x2", d => (axisRadius - tickLength) * Math.cos(vis.angle[0](d) - Math.PI/2)) // inward
-				.attr("y2", d => (axisRadius - tickLength) * Math.sin(vis.angle[0](d) - Math.PI/2))
-				.attr("stroke", "#000");
-
-		// Draw labels
-		xAxisGroup.selectAll("text")
-    			.data(ticks)
-				.enter()
-				.append("text")
-				.attr("x", d => (axisRadius - tickLength - 15) * Math.cos(vis.angle[0](d) - Math.PI/2))
-				.attr("y", d => (axisRadius - tickLength - 15) * Math.sin(vis.angle[0](d) - Math.PI/2))
-				.attr("text-anchor", "middle")
-				.attr("alignment-baseline", "middle")
-				.text(d => d);
+		// for when a single element in selected
+		vis.focusRadius = d3.scaleSqrt()
+			.range([vis.innerRadius, vis.innerRadius + vis.outerRadius - 4 * ringGap])
+		vis.focusRadialArea = d3.areaRadial()
+			.angle(d => vis.angle[0](d.data.chap))
+			.innerRadius(d => vis.focusRadius(d[0]))
+			.outerRadius(d => vis.focusRadius(d[1]))
+			.curve(d3.curveCardinal)
 
 	}
 
 	/*
  	* Data wrangling
  	*/
-	wrangleData(){
+	wrangleData(character){
 		let vis = this;
-	
-		vis.displayData = vis.stackedData
-       
-		// Update the visualization
+		vis.character = character
+
+		// if no character selected, erase visualization
+		if (character === null) {
+			vis.displayData = []
+		}
+
+		// else update vis with selected character
+		else {
+			vis.data = this.fullData[character];
+			vis.initRings()
+			vis.displayData = vis.stackedData
+		}
 		vis.updateVis();
+
 	}
 
 	/*
@@ -174,42 +161,214 @@ constructor(parentElement, data, innerRadius = 100, ringWidth = 80) {
  	* Function parameters only needed if different kinds of updates are needed
  	*/
 	updateVis(){
+
 		let vis = this;
 
-		// draw each ring
-		for (let i = 0; i < 4; i++) {
+		var erase = function() {
+			// erase element rings with transition
+			for (let i = 0; i < 4; i++) {
+				vis.svg.selectAll(`.ring${i}`)
+						.data([])
+						.exit()
+						.transition()
+						.duration(100)
+						.style("opacity", 0)
+						.remove();
+						
+			}
 
-			// Update domain
-			// Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
-			vis.radius[i].domain([0, d3.max(vis.displayData[i], function(d) {
-				return d3.max(d, function(e) {
-					return e[1];
-				});
-			})
-			]);
-
-			let categories = vis.svg.selectAll(`.ring${i}`)
-								.data(vis.displayData[i])  
-
-			categories.enter().append("path")
-				.attr("class", `ring${i}`)
-				.merge(categories)
-				.style("fill", d => {
-					return vis.colorScale[i](d.key)
-				})
-				.attr("d", d => vis.radialArea[i](d))
-				// update tooltip on hover
-				.on("mouseover", (_, d) => {
-					vis.tooltip.style("opacity", 1)
-					vis.tooltip.text(d.key)})
-				.on("mouseout", function() {
-					vis.tooltip.style("opacity", 0); 
-				});
-
-			categories.exit().remove();
-
+			// erase ring outlines and label
+			vis.ringOutlines.forEach(r => r.attr("opacity", 0).attr("stroke", "#b9c754"))
+			vis.ringLabel.attr("opacity", 0)
 		}
 
+		// draw all ring elements while unfocusing elemIndex
+		var allElements = function(elemIndex) {
+
+			// link to element viz
+			if (window.filterElementViz) {
+				window.filterElementViz(vis.character, null)
+			}
+          		
+			// get the max domain of all 4 rings
+			const globalMax = d3.max(vis.displayData, element =>
+			d3.max(element, d =>
+				d3.max(d, e => e[1])
+			));
+
+			// set domain of all 4 rings
+			vis.radius.forEach(r => {
+				r.domain([0, globalMax]);
+			});
+
+			// show ring outlines
+			vis.ringOutlines.forEach(r => r.attr("opacity", 1))
+
+			// update ring label
+			vis.ringLabel.text(globalMax)
+			vis.ringLabel.attr("opacity", 1)
+
+			// erase visualization if no character/data
+			if (vis.displayData.length === 0) {
+				erase()
+				return
+			}
+
+			var drawRing = function(i) {
+				let categories = vis.svg.selectAll(`.ring${i}`)
+											.data(vis.displayData[i]);
+				categories.enter().append("path")
+					.attr("class", `ring${i}`)
+					.style("fill", "white")  
+					.merge(categories)
+					.on('mousemove', function(event, d){
+
+						// mouse coordinates
+						const [mx, my] = d3.pointer(event, vis.svg.node());
+						let angle = Math.atan2(my, mx) + Math.PI/2;
+						if (angle < 0) angle += 2 * Math.PI;
+
+						const chapterIndex = Math.floor(angle / (2 * Math.PI) * 61);
+						const yValue = d[chapterIndex][1] - d[chapterIndex][0];
+
+						// highligh element layer
+						vis.ringOutlines[i].attr("stroke", "black")
+						vis.ringOutlines[i + 1].attr("stroke", "black")
+
+						// show tooltip
+						vis.tooltip
+							.style("opacity", 1)
+							.style("left", event.pageX + 20 + "px")
+							.style("top", event.pageY + "px")
+							.html(`
+								<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+									<h4>Character: ${vis.character}<h4>
+									<h6>Element: ${elements[i]}<h6>
+									<h6>Trait: ${d.key}<h3>    
+									<h6>Count: ${yValue}<h4> 
+									<h6>Book: ${chapterIndex === 60 ? 3 : Math.floor(chapterIndex / 20) + 1}<h4>  
+									<h6>Chapter: ${chapterIndex === 60 ? 21 : chapterIndex % 20 + 1}<h4>              
+								</div>`);
+					})	
+					.on('mouseout', function(event, d){
+						// unhighlight element
+						vis.ringOutlines[i].attr("stroke", "#b9c754")
+						vis.ringOutlines[i + 1].attr("stroke", "#b9c754")
+
+						vis.tooltip
+							.style("opacity", 0)
+							.style("left", 0)
+							.style("top", 0)
+							.html(``);
+					})
+					.on('click', function(event, d) {
+						focusElement(parseInt(this.className["animVal"].charAt(4)));
+					})
+					.transition()
+					.duration(500)
+					.style("fill", d => vis.colorScale[i](d.key))
+					.attr("d", d => vis.radialArea[i](d));
+
+				categories.exit().remove();
+			}
+
+			// unfocus element
+			if (elemIndex !== undefined) {
+				drawRing(elemIndex)
+			}
+
+			// draw rings with transitions by layers
+			for (let i = 0; i < 4; i++) {
+				// skip unfocusing element if already redrawn
+				if (i == elemIndex)
+					continue
+				// stagger start time between layers
+				((i) => {
+					setTimeout(() => {
+						drawRing(i)},
+					// skip elemIndex layer if already drawn, and wait for elemIndex to be drawn
+					((elemIndex && (i > elemIndex) ? i - 1 : i) * 300) + (elemIndex ? 500: 0)); 
+				})(i);
+			}
+		}
+
+		// enlarge element layer
+		var focusElement = function(elemIndex) {
+
+			// link to element viz
+			if (window.filterElementViz) {
+				window.filterElementViz(vis.character, elements[elemIndex].toLowerCase())
+			}
+
+			// erase current rings
+			erase()
+			
+			// erase inner 3 ring outlines
+			vis.ringOutlines.forEach((r, i) => r.attr("opacity", i < 4 ? 0 : 1))
+
+			// update domain of focusRadius scale
+			const domainMax = d3.max(vis.displayData[elemIndex], d =>
+										d3.max(d, e => e[1]))
+			vis.focusRadius.domain([0, domainMax]);
+
+			// update ring outline label
+			vis.ringLabel.text(domainMax)
+			vis.ringLabel.attr("opacity", 1)
+
+			let categories = vis.svg.selectAll(`.ring${elemIndex}`)
+				.data(vis.displayData[elemIndex]);
+
+			// draw enlarged element layers
+			categories.enter().append("path")
+				.attr("class", `ring${elemIndex}`)
+				.style("fill", "white")  
+				.merge(categories)
+				.on('mousemove', function(event, d){
+
+					// mouse coordinates
+					const [mx, my] = d3.pointer(event, vis.svg.node());
+					let angle = Math.atan2(my, mx) + Math.PI/2;
+					if (angle < 0) angle += 2 * Math.PI;
+
+					const chapterIndex = Math.floor(angle / (2 * Math.PI) * 61);
+					const yValue = d[chapterIndex][1] - d[chapterIndex][0];
+					vis.ringOutlines[4].attr("stroke", "black");
+
+					// show tooltip
+					vis.tooltip
+						.style("opacity", 1)
+						.style("left", event.pageX + 20 + "px")
+						.style("top", event.pageY + "px")
+						.html(`
+							<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+								<h1>Character: ${vis.character}
+								<h3>Trait: ${d.key}<h3>    
+								<h4>Count: ${yValue}<h4>  
+								<h4>Chapter: ${chapterIndex + 1}<h4>              
+							</div>`);
+				})	
+				.on('mouseout', function(event, d){
+					vis.ringOutlines[4].attr("stroke", "#b9c754");
+					vis.tooltip
+						.style("opacity", 0)
+						.style("left", 0)
+						.style("top", 0)
+						.html(``);
+				})
+				.on('click', function(event, d) {
+					vis.ringOutlines[4].attr("stroke", "#b9c754");
+					allElements(elemIndex)
+				})
+				.transition()
+				.duration(1500)
+				.style("fill", d => vis.colorScale[elemIndex](d.key))
+				.attr("d", d => vis.focusRadialArea(d));
+
+			categories.exit().remove();
+		}
+
+		// draw all elemental rings
+		allElements()
 		
 	}
 }
