@@ -55,10 +55,34 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-#frame3_1 {
-	overflow-x: auto;
-	overflow-y: auto;
-}/* Avatar Bubble Chart Styles */
+#frame3 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px;
+	width: 100%;
+}
+
+#frame3 svg {
+  display: block;
+  width: 800px;
+  height: 800px;
+  margin: 0;
+}
+
+.frame3-viz-row {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 40px;
+	width: 100%;
+}
+
+.frame3-intro h2 {
+	font-family: 'Philosopher', serif;
+	font-style: italic;
+}
+/* Avatar Bubble Chart Styles */
 
 svg {
 	display: block;
