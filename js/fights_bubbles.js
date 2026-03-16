@@ -187,16 +187,16 @@ const manualPositions = {
     "y": 291
   },
   "43": {
-    "x": 143,
-    "y": 295
+    "x": 128,
+    "y": 299
   },
   "44": {
     "x": 92,
     "y": 173
   },
   "45": {
-    "x": 138,
-    "y": 321
+    "x": 105,
+    "y": 311
   },
   "46": {
     "x": 62,
@@ -235,8 +235,8 @@ const manualPositions = {
     "y": 276
   },
   "55": {
-    "x": 129,
-    "y": 299
+    "x": 131,
+    "y": 319
   },
   "56": {
     "x": 74,
@@ -273,18 +273,6 @@ const manualPositions = {
   "64": {
     "x": 142,
     "y": 147
-  },
-  "65": {
-    "x": 114,
-    "y": 319
-  },
-  "66": {
-    "x": 66,
-    "y": 272
-  },
-  "67": {
-    "x": 105,
-    "y": 303
   }
 };
 
@@ -572,7 +560,7 @@ bubbles.append('circle')
     .attr('stroke', '#e8d9b5')
     .attr('stroke-width', 1.5)
     .attr('opacity', 0.82)
-    .style('cursor', 'move')
+    //.style('cursor', 'move')
     .style('filter', 'drop-shadow(0 1px 3px rgba(44,31,14,0.3))')
     .on('mouseover', function(event, d) {
         const selected = Array.from(selectedCharacters);
@@ -677,7 +665,6 @@ bubbles.append('circle')
     //         </div>
     //     `);
 
-    // // Export function
     // window.exportPositions = function() {
     //     const exportData = {};
     //     nodes.forEach(node => {
