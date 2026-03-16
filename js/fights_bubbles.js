@@ -1,7 +1,7 @@
 const config = {
     // Map dimensions
-    mapWidth: 700,
-    mapHeight: 800,
+    mapWidth: 600,
+    mapHeight: 600,
     backgroundColor: '#e8d9b5',   
     nationColors: {
         'Fire': '#b84e10',         
@@ -18,274 +18,273 @@ const config = {
 };
 
 const manualPositions = {
-  
   "1": {
-    "x": 411,
-    "y": 66
+    "x": 317,
+    "y": 42
   },
   "2": {
-    "x": 440,
-    "y": 570
+    "x": 301,
+    "y": 470
   },
   "3": {
-    "x": 342,
-    "y": 537
+    "x": 282,
+    "y": 491
   },
   "4": {
-    "x": 366,
-    "y": 545
+    "x": 304,
+    "y": 513
   },
   "5": {
-    "x": 424,
-    "y": 582
+    "x": 368,
+    "y": 496
   },
   "6": {
-    "x": 398,
-    "y": 55
-  },
-  "7": {
-    "x": 340,
-    "y": 561
-  },
-  "8": {
-    "x": 394,
-    "y": 75
-  },
-  "9": {
-    "x": 373,
-    "y": 568
-  },
-  "10": {
-    "x": 397,
-    "y": 588
-  },
-  "11": {
-    "x": 294,
-    "y": 578
-  },
-  "12": {
-    "x": 383,
-    "y": 546
-  },
-  "13": {
-    "x": 321,
-    "y": 576
-  },
-  "14": {
-    "x": 361,
-    "y": 596
-  },
-  "15": {
-    "x": 339,
-    "y": 77
-  },
-  "16": {
-    "x": 314,
-    "y": 81
-  },
-  "17": {
-    "x": 389,
-    "y": 586
-  },
-  "18": {
-    "x": 339,
-    "y": 52
-  },
-  "19": {
-    "x": 369,
-    "y": 61
-  },
-  "20": {
-    "x": 364,
+    "x": 351,
     "y": 51
   },
-  "21": {
+  "7": {
+    "x": 309,
+    "y": 488
+  },
+  "8": {
     "x": 348,
-    "y": 596
+    "y": 62
+  },
+  "9": {
+    "x": 282,
+    "y": 471
+  },
+  "10": {
+    "x": 348,
+    "y": 504
+  },
+  "11": {
+    "x": 249,
+    "y": 494
+  },
+  "12": {
+    "x": 329,
+    "y": 510
+  },
+  "13": {
+    "x": 262,
+    "y": 499
+  },
+  "14": {
+    "x": 330,
+    "y": 504
+  },
+  "15": {
+    "x": 290,
+    "y": 67
+  },
+  "16": {
+    "x": 266,
+    "y": 66
+  },
+  "17": {
+    "x": 321,
+    "y": 474
+  },
+  "18": {
+    "x": 287,
+    "y": 47
+  },
+  "19": {
+    "x": 334,
+    "y": 48
+  },
+  "20": {
+    "x": 305,
+    "y": 39
+  },
+  "21": {
+    "x": 373,
+    "y": 488
   },
   "22": {
-    "x": 350,
-    "y": 79
+    "x": 317,
+    "y": 53
   },
   "23": {
-    "x": 584,
-    "y": 186
+    "x": 499,
+    "y": 254
   },
   "24": {
-    "x": 502,
-    "y": 308
+    "x": 376,
+    "y": 294
   },
   "25": {
-    "x": 441,
-    "y": 344
+    "x": 382,
+    "y": 334
   },
   "26": {
-    "x": 518,
-    "y": 270
+    "x": 413,
+    "y": 305
   },
   "27": {
-    "x": 556,
-    "y": 353
+    "x": 480,
+    "y": 304
   },
   "28": {
-    "x": 552,
-    "y": 233
+    "x": 401,
+    "y": 228
   },
   "29": {
     "x": 470,
     "y": 186
   },
   "30": {
-    "x": 535,
-    "y": 410
+    "x": 364,
+    "y": 150
   },
   "31": {
-    "x": 455,
-    "y": 294
+    "x": 407,
+    "y": 269
   },
   "32": {
-    "x": 595,
-    "y": 244
+    "x": 405,
+    "y": 132
   },
   "33": {
     "x": 525,
     "y": 190
   },
   "34": {
-    "x": 485,
-    "y": 428
+    "x": 440,
+    "y": 318
   },
   "35": {
-    "x": 373,
-    "y": 274
+    "x": 316,
+    "y": 263
   },
   "36": {
     "x": 430,
     "y": 166
   },
   "37": {
-    "x": 487,
-    "y": 367
+    "x": 455,
+    "y": 259
   },
   "38": {
-    "x": 426,
-    "y": 264
+    "x": 369,
+    "y": 231
   },
   "39": {
-    "x": 385,
-    "y": 300
+    "x": 339,
+    "y": 243
   },
   "40": {
-    "x": 556,
-    "y": 294
+    "x": 453,
+    "y": 128
   },
   "41": {
     "x": 500,
     "y": 154
   },
   "42": {
-    "x": 67,
-    "y": 338
+    "x": 55,
+    "y": 291
   },
   "43": {
-    "x": 128,
-    "y": 375
+    "x": 143,
+    "y": 295
   },
   "44": {
-    "x": 114,
-    "y": 196
+    "x": 92,
+    "y": 173
   },
   "45": {
-    "x": 189,
-    "y": 330
+    "x": 138,
+    "y": 321
   },
   "46": {
-    "x": 65,
-    "y": 289
+    "x": 62,
+    "y": 254
   },
   "47": {
-    "x": 167,
-    "y": 177
+    "x": 121,
+    "y": 153
   },
   "48": {
-    "x": 150,
+    "x": 113,
     "y": 180
   },
   "49": {
-    "x": 113,
-    "y": 293
+    "x": 121,
+    "y": 265
   },
   "50": {
-    "x": 117,
-    "y": 170
+    "x": 102,
+    "y": 157
   },
   "51": {
-    "x": 134,
-    "y": 297
+    "x": 161,
+    "y": 287
   },
   "52": {
-    "x": 139,
-    "y": 352
+    "x": 81,
+    "y": 252
   },
   "53": {
-    "x": 122,
-    "y": 349
+    "x": 87,
+    "y": 300
   },
   "54": {
-    "x": 55,
-    "y": 329
+    "x": 50,
+    "y": 276
   },
   "55": {
-    "x": 89,
-    "y": 295
+    "x": 129,
+    "y": 299
   },
   "56": {
-    "x": 100,
-    "y": 349
+    "x": 74,
+    "y": 281
   },
   "57": {
-    "x": 222,
-    "y": 333
+    "x": 193,
+    "y": 284
   },
   "58": {
-    "x": 135,
-    "y": 212
+    "x": 107,
+    "y": 162
   },
   "59": {
-    "x": 84,
-    "y": 324
+    "x": 51,
+    "y": 255
   },
   "60": {
-    "x": 192,
-    "y": 174
+    "x": 166,
+    "y": 146
   },
   "61": {
-    "x": 47,
-    "y": 309
+    "x": 39,
+    "y": 269
   },
   "62": {
-    "x": 98,
-    "y": 202
+    "x": 83,
+    "y": 171
   },
   "63": {
-    "x": 153,
-    "y": 379
+    "x": 102,
+    "y": 259
   },
   "64": {
-    "x": 198,
-    "y": 159
+    "x": 142,
+    "y": 147
   },
   "65": {
-    "x": 176,
-    "y": 342
+    "x": 114,
+    "y": 319
   },
   "66": {
-    "x": 68,
-    "y": 307
+    "x": 66,
+    "y": 272
   },
   "67": {
-    "x": 157,
-    "y": 351
+    "x": 105,
+    "y": 303
   }
 };
 
@@ -302,19 +301,18 @@ const introBlock = d3.select('#frame3')
 introBlock.append('h2')
     .style('margin', '0 0 10px 0')
     .attr("font-family", "Philosopher, serif")
-    .attr("font-style", "italic")
-    .style('font-size', '40px')
     .attr("fill", "#5a3e22")
     .style('font-weight', 'normal')
     .style('letter-spacing', '0.05em')
-    .text('Conflict Across Avatar');
+    .text('Conflict Across The Show');
 
 introBlock.append('p')
     .style('margin', '0 auto')
     .style('max-width', '900px')
     .style('font-family', "'Philosopher', serif")
-    .style('font-size', '20px')
+    .style('font-size', '16px')
     .style('line-height', '1.7')
+    .style('color', 'var(--ink-faded)')
     .text(`While elemental bending is one
         of the most recognizable    
         aspects of Avatar: The Last
@@ -360,44 +358,37 @@ const svg = mapContainer
     .append('svg')
     .attr('width', config.mapWidth + 40)
     .attr('height', config.mapHeight + 60)
+    .attr('viewBox', `0 0 ${config.mapWidth + 40} ${config.mapHeight + 60}`)
     .style('background-color', config.backgroundColor)
     .style('display', 'block');
 
-// Parchment background rect
+// Background rect
 svg.append('rect')
     .attr('width', config.mapWidth + 40)
     .attr('height', config.mapHeight + 60)
     .attr('fill', config.backgroundColor);
 
-// Subtle parchment texture noise overlay
-const defs = svg.append('defs');
-const filter = defs.append('filter').attr('id', 'parchment-noise');
-filter.append('feTurbulence')
-    .attr('type', 'fractalNoise')
-    .attr('baseFrequency', '0.65')
-    .attr('numOctaves', '3')
-    .attr('stitchTiles', 'stitch');
-filter.append('feColorMatrix').attr('type', 'saturate').attr('values', '0');
-filter.append('feBlend')
-    .attr('in', 'SourceGraphic')
-    .attr('mode', 'multiply');
-
+// Border around map
 svg.append('rect')
-    .attr('width', config.mapWidth + 40)
-    .attr('height', config.mapHeight + 60)
-    .attr('fill', 'rgba(44,31,14,0.03)')
-    .attr('filter', 'url(#parchment-noise)')
-    .style('pointer-events', 'none');
-
+    .attr('x', 8)
+    .attr('y', 8)
+    .attr('width', config.mapWidth + 24)
+    .attr('height', config.mapHeight + 44)
+    .attr('rx', 10)
+    .attr('ry', 10)
+    .attr('fill', 'none')
+    .attr('stroke', '#5a3e22')
+    .attr('stroke-width', 2)
+    .attr('opacity', 0.7);
 
 // Create a group for the map content
 const mapGroup = svg.append('g')
     .attr('class', 'map-content')
-    .attr('transform', `translate(20, 30)`);
+    .attr('transform', `translate(-2, 30)`);
 
 // Title
 mapGroup.append('text')
-    .attr('x', config.mapWidth / 2 + 50)
+    .attr('x', config.mapWidth / 2 + 20)
     .attr('y', 0)
     .attr('text-anchor', 'middle')
     .style('font-size', '18px')
@@ -405,12 +396,12 @@ mapGroup.append('text')
     .style('font-family', "'Uncial Antiqua', cursive")
     .style('fill', '#2c1f0e')
     .style('letter-spacing', '0.06em')
-    .text('Fight Locations by Nation');
+    .text('Fights By Season');
 
 mapGroup.append('line')
-    .attr('x1', config.mapWidth / 2 - 120)
-    .attr('x2', config.mapWidth / 2 + 120)
-    .attr('y1', -2).attr('y2', -2)
+    .attr('x1', config.mapWidth / 2 - 100)
+    .attr('x2', config.mapWidth / 2 + 140)
+    .attr('y1', 5).attr('y2', 5)
     .attr('stroke', 'rgba(44,31,14,0.2)')
     .attr('stroke-width', 1);
 
