@@ -1,102 +1,459 @@
-// Avatar Fights Bubble Chart - Manual Positioning
-// Bubbles manually placed to form Fire Nation shape
-
-// Configuration
 const config = {
-    width: 1400,
-    height: 900,
-    // backgroundColor: '#1a1a2e',
-    fireColor: '#E94D40',
-    waterColor: '#4DA6FF',
+    // Map dimensions
+    mapWidth: 700,
+    mapHeight: 800,
+    backgroundColor: '#e8d9b5',   
+    nationColors: {
+        'Fire': '#b84e10',         
+        'Water': '#235e8c',        
+        'Earth': '#4a6a22',        
+        'Air': '#685949'           
+    },
+
+    // Bubble size range
     bubbleScale: {
-        min: 15,
-        max: 45
+        min: 12,
+        max: 28
     }
 };
 
-// MANUAL POSITIONS - Edit these coordinates to position bubbles
-// Format: { fightId: {x: xPosition, y: yPosition} }
-const firePositions = {
-  "15": { x: 491, y: 500 },
-  "16": { x: 643, y: 372 },
-  "17": { x: 660, y: 488 },
-  "18": { x: 873, y: 432 },
-  "19": { x: 579, y: 357 },
-  "20": { x: 488, y: 450 },
-  "21": { x: 584, y: 577 },
-  "22": { x: 684, y: 514 },
-  "23": { x: 553, y: 505 },
-  "24": { x: 615, y: 520 },
-  "25": { x: 705, y: 462 },
-  "26": { x: 798, y: 453 },
-  "27": { x: 450, y: 394 },
-  "28": { x: 431, y: 474 },
-  "29": { x: 381, y: 459 },
-  "30": { x: 632, y: 598 },
-  "31": { x: 654, y: 569 },
-  "32": { x: 601, y: 474 },
-  "33": { x: 615, y: 385 },
-  "34": { x: 534, y: 340 },
-  "35": { x: 920, y: 339 },
-  "36": { x: 903, y: 382 },
-  "37": { x: 423, y: 322 },
-  "38": { x: 376, y: 399 },
-  "39": { x: 396, y: 429 },
-  "40": { x: 491, y: 313 }
+const manualPositions = {
+  
+  "1": {
+    "x": 411,
+    "y": 66
+  },
+  "2": {
+    "x": 440,
+    "y": 570
+  },
+  "3": {
+    "x": 342,
+    "y": 537
+  },
+  "4": {
+    "x": 366,
+    "y": 545
+  },
+  "5": {
+    "x": 424,
+    "y": 582
+  },
+  "6": {
+    "x": 398,
+    "y": 55
+  },
+  "7": {
+    "x": 340,
+    "y": 561
+  },
+  "8": {
+    "x": 394,
+    "y": 75
+  },
+  "9": {
+    "x": 373,
+    "y": 568
+  },
+  "10": {
+    "x": 397,
+    "y": 588
+  },
+  "11": {
+    "x": 294,
+    "y": 578
+  },
+  "12": {
+    "x": 383,
+    "y": 546
+  },
+  "13": {
+    "x": 321,
+    "y": 576
+  },
+  "14": {
+    "x": 361,
+    "y": 596
+  },
+  "15": {
+    "x": 339,
+    "y": 77
+  },
+  "16": {
+    "x": 314,
+    "y": 81
+  },
+  "17": {
+    "x": 389,
+    "y": 586
+  },
+  "18": {
+    "x": 339,
+    "y": 52
+  },
+  "19": {
+    "x": 369,
+    "y": 61
+  },
+  "20": {
+    "x": 364,
+    "y": 51
+  },
+  "21": {
+    "x": 348,
+    "y": 596
+  },
+  "22": {
+    "x": 350,
+    "y": 79
+  },
+  "23": {
+    "x": 584,
+    "y": 186
+  },
+  "24": {
+    "x": 502,
+    "y": 308
+  },
+  "25": {
+    "x": 441,
+    "y": 344
+  },
+  "26": {
+    "x": 518,
+    "y": 270
+  },
+  "27": {
+    "x": 556,
+    "y": 353
+  },
+  "28": {
+    "x": 552,
+    "y": 233
+  },
+  "29": {
+    "x": 470,
+    "y": 186
+  },
+  "30": {
+    "x": 535,
+    "y": 410
+  },
+  "31": {
+    "x": 455,
+    "y": 294
+  },
+  "32": {
+    "x": 595,
+    "y": 244
+  },
+  "33": {
+    "x": 525,
+    "y": 190
+  },
+  "34": {
+    "x": 485,
+    "y": 428
+  },
+  "35": {
+    "x": 373,
+    "y": 274
+  },
+  "36": {
+    "x": 430,
+    "y": 166
+  },
+  "37": {
+    "x": 487,
+    "y": 367
+  },
+  "38": {
+    "x": 426,
+    "y": 264
+  },
+  "39": {
+    "x": 385,
+    "y": 300
+  },
+  "40": {
+    "x": 556,
+    "y": 294
+  },
+  "41": {
+    "x": 500,
+    "y": 154
+  },
+  "42": {
+    "x": 67,
+    "y": 338
+  },
+  "43": {
+    "x": 128,
+    "y": 375
+  },
+  "44": {
+    "x": 114,
+    "y": 196
+  },
+  "45": {
+    "x": 189,
+    "y": 330
+  },
+  "46": {
+    "x": 65,
+    "y": 289
+  },
+  "47": {
+    "x": 167,
+    "y": 177
+  },
+  "48": {
+    "x": 150,
+    "y": 180
+  },
+  "49": {
+    "x": 113,
+    "y": 293
+  },
+  "50": {
+    "x": 117,
+    "y": 170
+  },
+  "51": {
+    "x": 134,
+    "y": 297
+  },
+  "52": {
+    "x": 139,
+    "y": 352
+  },
+  "53": {
+    "x": 122,
+    "y": 349
+  },
+  "54": {
+    "x": 55,
+    "y": 329
+  },
+  "55": {
+    "x": 89,
+    "y": 295
+  },
+  "56": {
+    "x": 100,
+    "y": 349
+  },
+  "57": {
+    "x": 222,
+    "y": 333
+  },
+  "58": {
+    "x": 135,
+    "y": 212
+  },
+  "59": {
+    "x": 84,
+    "y": 324
+  },
+  "60": {
+    "x": 192,
+    "y": 174
+  },
+  "61": {
+    "x": 47,
+    "y": 309
+  },
+  "62": {
+    "x": 98,
+    "y": 202
+  },
+  "63": {
+    "x": 153,
+    "y": 379
+  },
+  "64": {
+    "x": 198,
+    "y": 159
+  },
+  "65": {
+    "x": 176,
+    "y": 342
+  },
+  "66": {
+    "x": 68,
+    "y": 307
+  },
+  "67": {
+    "x": 157,
+    "y": 351
+  }
 };
 
-// Manual positions for Water Nation
-const waterPositions = {
-    // example:
-    // "5": { x: 1050, y: 300 },
-};
+// Intro text
+const introBlock = d3.select('#frame3')
+    .append('div')
+    .attr('class', 'frame3-intro')
+    .style('max-width', '1200px')
+    .style('margin', '0 auto 22px auto')
+    .style('padding', '0 20px')
+    .style('text-align', 'center')
+    .style('color', '#2c1f0e');
 
+introBlock.append('h2')
+    .style('margin', '0 0 10px 0')
+    .attr("font-family", "Philosopher, serif")
+    .attr("font-style", "italic")
+    .style('font-size', '40px')
+    .attr("fill", "#5a3e22")
+    .style('font-weight', 'normal')
+    .style('letter-spacing', '0.05em')
+    .text('Conflict Across Avatar');
 
+introBlock.append('p')
+    .style('margin', '0 auto')
+    .style('max-width', '900px')
+    .style('font-family', "'Philosopher', serif")
+    .style('font-size', '20px')
+    .style('line-height', '1.7')
+    .text(`While elemental bending is one
+        of the most recognizable    
+        aspects of Avatar: The Last
+        Airbender, it also reflects
+        deeper tensions between
+        characters and nations. The
+        previous visualization showed
+        how often the elements are
+        referenced throughout the
+        series, highlighting how
+        bending shapes the world of
+        the show. However, references
+        to elements alone do not
+        capture the conflicts that
+        drive the story forward. The
+        visualization on the left
+        shows how fights occur in each
+        book (season), illustrating
+        how conflict develops across
+        the series. These fights mark
+        important narrative moments
+        where personal rivalries and
+        political tensions escalate.
+        The character network on the
+        right shifts the focus from
+        when fights happen to who they
+        happen between, revealing how
+        conflict is distributed across
+        recurring rivalries and
+        relationships.`);
 
-// Create SVG
-const svg = d3.select('#frame3')
+const vizRow = d3.select('#frame3')
+    .append('div')
+    .attr('class', 'frame3-viz-row');
+
+// Create separate container for map
+const mapContainer = vizRow
+    .append('div')
+    .attr('id', 'map-container');
+
+// Create SVG for map
+const svg = mapContainer
     .append('svg')
-    .attr('width', config.width)
-    .attr('height', config.height)
-    .style('background-color', config.backgroundColor);
+    .attr('width', config.mapWidth + 40)
+    .attr('height', config.mapHeight + 60)
+    .style('background-color', config.backgroundColor)
+    .style('display', 'block');
 
+// Parchment background rect
 svg.append('rect')
-    .attr('width', config.width)
-    .attr('height', config.height)
+    .attr('width', config.mapWidth + 40)
+    .attr('height', config.mapHeight + 60)
     .attr('fill', config.backgroundColor);
 
-// Add title
-svg.append('text')
-    .attr('x', config.width / 2)
-    .attr('y', 40)
-    .attr('text-anchor', 'middle')
-    .style('font-size', '28px')
-    .style('font-weight', 'bold')
-    .style('fill', '#ECF0F1')
-    .style('text-shadow', '2px 2px 4px rgba(0,0,0,0.5)')
-    .text('Avatar Last Airbender Fights');
+// Subtle parchment texture noise overlay
+const defs = svg.append('defs');
+const filter = defs.append('filter').attr('id', 'parchment-noise');
+filter.append('feTurbulence')
+    .attr('type', 'fractalNoise')
+    .attr('baseFrequency', '0.65')
+    .attr('numOctaves', '3')
+    .attr('stitchTiles', 'stitch');
+filter.append('feColorMatrix').attr('type', 'saturate').attr('values', '0');
+filter.append('feBlend')
+    .attr('in', 'SourceGraphic')
+    .attr('mode', 'multiply');
 
-// Tooltip
+svg.append('rect')
+    .attr('width', config.mapWidth + 40)
+    .attr('height', config.mapHeight + 60)
+    .attr('fill', 'rgba(44,31,14,0.03)')
+    .attr('filter', 'url(#parchment-noise)')
+    .style('pointer-events', 'none');
+
+
+// Create a group for the map content
+const mapGroup = svg.append('g')
+    .attr('class', 'map-content')
+    .attr('transform', `translate(20, 30)`);
+
+// Title
+mapGroup.append('text')
+    .attr('x', config.mapWidth / 2 + 50)
+    .attr('y', 0)
+    .attr('text-anchor', 'middle')
+    .style('font-size', '18px')
+    .style('font-weight', 'bold')
+    .style('font-family', "'Uncial Antiqua', cursive")
+    .style('fill', '#2c1f0e')
+    .style('letter-spacing', '0.06em')
+    .text('Fight Locations by Nation');
+
+mapGroup.append('line')
+    .attr('x1', config.mapWidth / 2 - 120)
+    .attr('x2', config.mapWidth / 2 + 120)
+    .attr('y1', -2).attr('y2', -2)
+    .attr('stroke', 'rgba(44,31,14,0.2)')
+    .attr('stroke-width', 1);
+
+// Tooltip 
 const tooltip = d3.select('body')
     .append('div')
     .attr('class', 'tooltip')
     .style('position', 'absolute')
     .style('visibility', 'hidden')
     .style('opacity', 0)
-    .style('background-color', 'rgba(0, 0, 0, 0.95)')
-    .style('color', 'white')
-    .style('padding', '14px 18px')
-    .style('border-radius', '10px')
-    .style('font-size', '14px')
-    .style('font-family', 'Arial, sans-serif')
+    .style('background-color', '#f0e6cc')
+    .style('color', '#2c1f0e')
+    .style('padding', '12px 16px')
+    .style('border-radius', '4px')
+    .style('font-size', '13px')
+    .style('font-family', "'Philosopher', serif")
     .style('pointer-events', 'none')
     .style('z-index', '10000')
-    .style('max-width', '340px')
-    .style('box-shadow', '0 6px 16px rgba(0,0,0,0.6)')
+    .style('max-width', '300px')
+    .style('box-shadow', '2px 4px 14px rgba(44,31,14,0.25)')
     .style('line-height', '1.6')
-    .style('border', '2px solid rgba(255,255,255,0.3)');
+    .style('border', '1px solid rgba(44,31,14,0.2)');
 
-// Helper functions
+// Helper: get random point in territory
+function getRandomPointInTerritory(polygons) {
+    const polygon = polygons[Math.floor(Math.random() * polygons.length)];
+    const xs = polygon.map(p => p.x);
+    const ys = polygon.map(p => p.y);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+
+    for (let i = 0; i < 100; i++) {
+        const point = {
+            x: minX + Math.random() * (maxX - minX),
+            y: minY + Math.random() * (maxY - minY)
+        };
+        if (isPointInPolygon(point, polygon)) return point;
+    }
+    return { x: (minX + maxX) / 2, y: (minY + maxY) / 2 };
+}
+
 function isPointInPolygon(point, polygon) {
     let inside = false;
     for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
@@ -109,200 +466,150 @@ function isPointInPolygon(point, polygon) {
     return inside;
 }
 
-function isPointInTerritory(point, polygons) {
-    return polygons.some(polygon => isPointInPolygon(point, polygon));
-}
+let nodes = [];
+let nationsData = null;
+let currentFights = [];
 
-// Generate good default positions based on Fire Nation shape
-function generateDefaultPositions(fights, polygons, sizeScale) {
-    const positions = {};
-    
-    // Sort fights by size (largest first)
-    const sortedFights = [...fights].sort((a, b) => b.num_participants - a.num_participants);
-    
-    // Main island approximate positions (hand-picked good spots)
-    const mainIslandPositions = [
-        // Center area (for largest bubbles)
-        {x: 500, y: 380}, {x: 550, y: 400}, {x: 600, y: 380}, {x: 650, y: 400},
-        {x: 520, y: 430}, {x: 580, y: 450}, {x: 630, y: 430}, {x: 680, y: 450},
-        // Upper area
-        {x: 480, y: 320}, {x: 540, y: 300}, {x: 600, y: 310}, {x: 660, y: 330},
-        // Lower area  
-        {x: 500, y: 500}, {x: 560, y: 520}, {x: 620, y: 500}, {x: 680, y: 520},
-        // Edges
-        {x: 450, y: 360}, {x: 720, y: 380}, {x: 480, y: 480}, {x: 700, y: 460}
-    ];
-    
-    // Smaller island positions
-    const smallIslandPositions = [
-        {x: 750, y: 300}, {x: 800, y: 320}, // Top right islands
-        {x: 850, y: 340}, {x: 900, y: 360}, // Far right islands
-        {x: 420, y: 300}, {x: 400, y: 350}  // Left side islands
-    ];
-    
-    // Assign positions
-    let mainIdx = 0;
-    let smallIdx = 0;
-    
-    sortedFights.forEach((fight, idx) => {
-        const radius = sizeScale(fight.num_participants);
-        let position;
-        
-        // Larger bubbles get main island positions
-        if (radius > 25 && mainIdx < mainIslandPositions.length) {
-            position = mainIslandPositions[mainIdx];
-            mainIdx++;
-        } else if (mainIdx < mainIslandPositions.length) {
-            position = mainIslandPositions[mainIdx];
-            mainIdx++;
-        } else if (smallIdx < smallIslandPositions.length) {
-            position = smallIslandPositions[smallIdx];
-            smallIdx++;
-        } else {
-            // Fallback random position
-            position = {x: 500 + Math.random() * 200, y: 350 + Math.random() * 150};
-        }
-        
-        positions[fight.id] = position;
-    });
-    
-    return positions;
-}
-
-// Load data
 Promise.all([
-    d3.json('data/processed/fire_nation_data.json'),
-    d3.json('data/processed/water_nation_data.json'),
+    d3.json('data/processed/atla-world-map.json'),
     d3.json('data/processed/fights.json')
-]).then(([fireNationData, waterNationData, fightData]) => {
+]).then(([worldMapData, fightsData]) => {
 
-    const fireNationTerritory = {
-        polygons: fireNationData.polygons,
-        centroid: fireNationData.centroid
-    };
+    console.log('World map loaded:', worldMapData);
+    console.log('Fights loaded:', fightsData.fights.length);
 
-    const waterNationTerritory = {
-        polygons: waterNationData.polygons,
-        centroid: waterNationData.centroid
-    };
-    
-    // Draw Fire Nation territory
-    const territoriesGroup = svg.append('g').attr('class', 'fire-territory');
-    
-    fireNationTerritory.polygons.forEach((polygon) => {
-        const pathData = 'M' + polygon.map(p => `${p.x},${p.y}`).join('L') + 'Z';
-        
-        territoriesGroup.append('path')
-            .attr('d', pathData)
-            .attr('fill', config.fireColor)
-            .attr('opacity', 0.27)
-            .attr('stroke', config.fireColor)
-            .attr('stroke-width', 2.5)
-            .attr('stroke-dasharray', '6,3')
-            .attr('stroke-opacity', 0.6);
+    currentFights = fightsData.fights;
+    window.currentFights = currentFights;
+
+    const originalWidth = 1300;
+    const originalHeight = 1100;
+    const scaleX = config.mapWidth / originalWidth;
+    const scaleY = config.mapHeight / originalHeight;
+    const scale = Math.min(scaleX, scaleY);
+
+    nationsData = {};
+    Object.entries(worldMapData.nations).forEach(([nationName, nationData]) => {
+        nationsData[nationName] = {
+            ...nationData,
+            polygons: nationData.polygons.map(polygon =>
+                polygon.map(point => ({
+                    x: point.x * scale,
+                    y: point.y * scale
+                }))
+            ),
+            centroid: nationData.centroid ? {
+                x: nationData.centroid.x * scale,
+                y: nationData.centroid.y * scale
+            } : null
+        };
     });
 
-    // Draw Water Nation territory
-    // Draw Water Nation territory
-    const waterTerritoriesGroup = svg.append('g').attr('class', 'water-territory');
+    if (window.characterNetwork && window.characterNetwork.create) {
+        window.characterNetwork.create(fightsData);
+    } else {
+        console.warn('Character network not loaded.');
+    }
 
-    waterNationTerritory.polygons.forEach((polygon) => {
-        const pathData = 'M' + polygon.map(p => `${p.x},${p.y}`).join('L') + 'Z';
+    // Draw nation territories
+    const territoriesGroup = mapGroup.append('g').attr('class', 'territories');
 
-        waterTerritoriesGroup.append('path')
-            .attr('d', pathData)
-            .attr('fill', config.waterColor)
-            .attr('opacity', 0.27)
-            .attr('stroke', config.waterColor)
-            .attr('stroke-width', 2.5)
-            .attr('stroke-dasharray', '6,3')
-            .attr('stroke-opacity', 0.6);
+    Object.entries(nationsData).forEach(([nationName, nationData]) => {
+        const group = territoriesGroup.append('g')
+            .attr('class', `nation-${nationName.toLowerCase()}`);
+
+        nationData.polygons.forEach(polygon => {
+            const pathData = 'M' + polygon.map(p => `${p.x},${p.y}`).join('L') + 'Z';
+            const opacity = nationName === 'Air' ? 0.04 : 0.18;
+            const strokeOpacity = nationName === 'Air' ? 0.15 : 0.55;
+
+            group.append('path')
+                .attr('d', pathData)
+                .attr('fill', config.nationColors[nationName])
+                .attr('opacity', opacity)
+                .attr('stroke', config.nationColors[nationName])
+                .attr('stroke-width', nationName === 'Air' ? 0.8 : 1.5)
+                .attr('stroke-dasharray', '5,4')
+                .attr('stroke-opacity', strokeOpacity);
+        });
     });
 
-    
-    svg.append('text')
-        .attr('x', fireNationTerritory.centroid.x)
-        .attr('y', config.height - 40)
-        .attr('text-anchor', 'middle')
-        .style('font-size', '22px')
-        .style('font-weight', 'bold')
-        .style('fill', config.fireColor)
-        .style('text-shadow', '2px 2px 6px rgba(0,0,0,0.8)');
-    
-    // Filter Fire Nation fights
-    const fireNationFights = fightData.fights.filter(f => f.book === 'Fire');
-    
     // Size scale
     const sizeScale = d3.scaleLinear()
-        .domain([1, d3.max(fireNationFights, d => d.num_participants)])
+        .domain([1, d3.max(fightsData.fights, d => d.num_participants)])
         .range([config.bubbleScale.min, config.bubbleScale.max]);
-    
-    // Use manual positions if provided, otherwise generate defaults
-    const positions = Object.keys(firePositions).length > 0 
-        ? firePositions 
-        : generateDefaultPositions(fireNationFights, fireNationTerritory.polygons, sizeScale);
-    
-    console.log('Using positions:', positions);
-    
-    // Create nodes with manual positions
-    const nodes = fireNationFights.map(fight => {
-        const pos = positions[fight.id] || {x: 500, y: 400};
+
+    // Create nodes
+    nodes = fightsData.fights.map(fight => {
+        const nation = fight.book;
+        const nationData = nationsData[nation];
+
+        let pos;
+        if (manualPositions[fight.id]) {
+            pos = manualPositions[fight.id];
+        } else if (nationData && nationData.polygons.length > 0) {
+            pos = getRandomPointInTerritory(nationData.polygons);
+        } else {
+            pos = { x: 350, y: 400 };
+        }
+
         return {
             ...fight,
             radius: sizeScale(fight.num_participants),
             x: pos.x,
             y: pos.y,
-            fx: pos.x,  // Fixed position
-            fy: pos.y   // Fixed position
+            fx: pos.x,
+            fy: pos.y,
+            color: config.nationColors[nation]
         };
     });
-    
-    // Create bubbles (no force simulation - fixed positions)
-    const bubbles = svg.append('g')
+
+    // Create bubbles
+    const bubbles = mapGroup.append('g')
         .attr('class', 'bubbles')
         .selectAll('g')
         .data(nodes)
         .join('g')
         .attr('class', 'bubble')
-        .attr('transform', d => `translate(${d.x},${d.y})`);
+        .attr('transform', d => `translate(${d.x},${d.y})`)
         //.call(drag());
-    
+
+    window.mapBubbles = bubbles;
+
     bubbles.append('circle')
         .attr('r', d => d.radius)
-        .attr('fill', config.fireColor)
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 2)
-        .attr('opacity', 0.85)
+        .attr('fill', d => d.color)
+        .attr('stroke', '#e8d9b5')      // parchment ring
+        .attr('stroke-width', 1.5)
+        .attr('opacity', 0.82)
         .style('cursor', 'move')
-        .style('filter', 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))')
+        .style('filter', 'drop-shadow(0 1px 3px rgba(44,31,14,0.3))')
         .on('mouseover', function(event, d) {
             d3.select(this)
                 .attr('opacity', 1)
-                .attr('stroke-width', 4)
-                .attr('stroke', '#FFD700');
-            
-            const combatants = d.main_combatants && d.main_combatants.length > 0 
+                .attr('stroke-width', 3)
+                .attr('stroke', '#2c1f0e');
+
+            const combatants = d.main_combatants && d.main_combatants.length > 0
                 ? d.main_combatants.join(', ')
-                : 'Unknown fighters';
-            
+                : 'Unknown';
+
             const supporting = d.supporting_characters && d.supporting_characters.length > 0
-                ? `<br><span style="font-size: 12px; color: #aaa;">Also involved: ${d.supporting_characters.slice(0, 3).join(', ')}</span>`
+                ? `<div style="font-size:11px;color:#5a3e22;margin-top:4px;">Also: ${d.supporting_characters.slice(0, 3).join(', ')}</div>`
                 : '';
-            
+
             tooltip.html(`
-                <div style="border-bottom: 2px solid ${config.fireColor}; padding-bottom: 8px; margin-bottom: 8px;">
-                    <strong style="font-size: 16px;">${d.chapter}</strong><br>
-                    <span style="color: ${config.fireColor}; font-weight: bold;">Book ${d.book_num}: Fire</span><br>
-                    <span style="font-size: 11px; color: #666;">Fight ID: ${d.id}</span>
+                <div style="border-bottom:1px solid rgba(44,31,14,0.2);padding-bottom:7px;margin-bottom:7px;">
+                    <strong style="font-family:'Uncial Antiqua',cursive;font-size:13px;color:#2c1f0e;">${d.chapter}</strong><br>
+                    <span style="color:${d.color};font-weight:bold;font-size:12px;">Book ${d.book_num}: ${d.book}</span>
+                    <span style="font-size:10px;color:#5a3e22;margin-left:6px;">Fight #${d.id}</span>
                 </div>
-                <div style="margin-bottom: 8px;">
-                    <strong>Main Combatants:</strong><br>
-                    <span style="font-size: 15px;">${combatants}</span>
+                <div style="margin-bottom:6px;">
+                    <span style="font-size:11px;color:#5a3e22;text-transform:uppercase;letter-spacing:0.05em;">Combatants</span><br>
+                    <span style="font-size:13px;color:#2c1f0e;">${combatants}</span>
                     ${supporting}
                 </div>
-                <div style="font-size: 12px; color: #aaa; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 6px;">
-                    Total participants: ${d.num_participants}<br>
-                    Position: (${Math.round(d.x)}, ${Math.round(d.y)})
+                <div style="font-size:11px;color:#5a3e22;font-style:italic;">
+                    ${d.num_participants} participant${d.num_participants !== 1 ? 's' : ''}
                 </div>
             `)
                 .style('visibility', 'visible')
@@ -315,98 +622,86 @@ Promise.all([
         })
         .on('mouseout', function() {
             d3.select(this)
-                .attr('opacity', 0.85)
-                .attr('stroke-width', 2)
-                .attr('stroke', '#fff');
-            
-            tooltip.style('opacity', 0)
-                .style('visibility', 'hidden');
+                .attr('opacity', 0.82)
+                .attr('stroke-width', 1.5)
+                .attr('stroke', '#e8d9b5');
+
+            tooltip.style('opacity', 0).style('visibility', 'hidden');
         });
-    
-    // Add button to export positions
-    // svg.append('foreignObject')
-    //     .attr('x', 20)
-    //     .attr('y', 60)
-    //     .attr('width', 200)
-    //     .attr('height', 100)
+
+    // Export button
+    // mapGroup.append('foreignObject')
+    //     .attr('x', config.mapWidth - 148)
+    //     .attr('y', -26)
+    //     .attr('width', 140)
+    //     .attr('height', 60)
     //     .append('xhtml:div')
     //     .html(`
     //         <button onclick="exportPositions()" style="
-    //             background: #E94D40;
-    //             color: white;
-    //             border: none;
-    //             padding: 10px 15px;
-    //             border-radius: 5px;
+    //             background: transparent;
+    //             color: #2c1f0e;
+    //             border: 1.5px solid rgba(44,31,14,0.45);
+    //             padding: 5px 10px;
+    //             border-radius: 3px;
     //             cursor: pointer;
-    //             font-size: 14px;
-    //             font-weight: bold;
-    //         ">Export Positions</button>
-    //         <div style="color: #95A5A6; font-size: 11px; margin-top: 5px;">
-    //             Drag bubbles to reposition.<br>Click to copy positions.
+    //             font-size: 11px;
+    //             font-family: 'Uncial Antiqua', cursive;
+    //             letter-spacing: 0.04em;
+    //             display: block;
+    //             width: 100%;
+    //             transition: background 0.2s;
+    //         " onmouseover="this.style.background='rgba(44,31,14,0.08)'" onmouseout="this.style.background='transparent'">
+    //             Export Positions
+    //         </button>
+    //         <div style="color:#5a3e22;font-size:9px;font-family:'Philosopher',serif;font-style:italic;margin-top:4px;text-align:center;">
+    //             Drag &amp; export to save
     //         </div>
     //     `);
-    
+
     // // Export function
     // window.exportPositions = function() {
     //     const exportData = {};
     //     nodes.forEach(node => {
-    //         exportData[node.id] = {
-    //             x: Math.round(node.x),
-    //             y: Math.round(node.y)
-    //         };
+    //         exportData[node.id] = { x: Math.round(node.x), y: Math.round(node.y) };
     //     });
-        
     //     const jsonString = JSON.stringify(exportData, null, 2);
-        
-    //     // Copy to clipboard
     //     navigator.clipboard.writeText(jsonString).then(() => {
-    //         alert('Positions copied to clipboard!\n\nPaste these into the firePositions object in the code.');
-    //         console.log('Manual positions:', jsonString);
+    //         alert('✓ Positions copied to clipboard!\n\nPaste into the manualPositions object in the code.');
     //     });
     // };
-    
+
     // function drag() {
     //     function dragstarted(event, d) {
     //         d3.select(this).raise();
     //         d3.select(this).select('circle')
-    //             .attr('stroke', '#FFD700')
-    //             .attr('stroke-width', 3);
+    //             .attr('stroke', '#2c1f0e')
+    //             .attr('stroke-width', 2.5);
     //     }
-        
     //     function dragged(event, d) {
-    //         // Update position
-    //         d.x = event.x;
-    //         d.y = event.y;
-    //         d.fx = event.x;
-    //         d.fy = event.y;
-            
-    //         // Move the bubble
+    //         d.x = event.x; d.y = event.y;
+    //         d.fx = event.x; d.fy = event.y;
     //         d3.select(this).attr('transform', `translate(${d.x},${d.y})`);
     //     }
-        
     //     function dragended(event, d) {
     //         d3.select(this).select('circle')
-    //             .attr('stroke', '#fff')
-    //             .attr('stroke-width', 2);
-            
-    //         console.log(`Fight ${d.id} moved to (${Math.round(d.x)}, ${Math.round(d.y)})`);
+    //             .attr('stroke', '#e8d9b5')
+    //             .attr('stroke-width', 1.5);
+    //         console.log(`Fight ${d.id} (${d.book}) moved to (${Math.round(d.x)}, ${Math.round(d.y)})`);
     //     }
-        
     //     return d3.drag()
     //         .on('start', dragstarted)
     //         .on('drag', dragged)
     //         .on('end', dragended);
     // }
-    
-    // console.log('✓ Manual positioning mode active - drag bubbles to reposition!');
-    
+
 }).catch(error => {
     console.error('Error loading data:', error);
     svg.append('text')
-        .attr('x', config.width / 2)
-        .attr('y', config.height / 2)
+        .attr('x', config.mapWidth / 2)
+        .attr('y', config.mapHeight / 2)
         .attr('text-anchor', 'middle')
-        .style('font-size', '16px')
-        .style('fill', '#E74C3C')
+        .style('font-size', '14px')
+        .style('font-family', "'Philosopher', serif")
+        .style('fill', '#b84e10')
         .text('Error: ' + error.message);
 });
