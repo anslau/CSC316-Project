@@ -54,10 +54,6 @@ h1, h2, h3, h4, h5, h6 {
 	flex-direction: column;
 }
 
-#frame2 svg {
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-	border-radius: 12px;
-}
 
 #frame3_1 {
 	overflow-x: auto;
