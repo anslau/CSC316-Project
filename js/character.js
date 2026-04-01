@@ -73,16 +73,21 @@ const characters = [
   }
 ];
 
-const frame = d3.select("#frame4");
-
+const frame = d3.select("#frame4")
+      
 // title container
 const container = frame.append("div")
-    .attr("class", "container position-relative p-3")
+    .style("width", "89%")
+    .style("font-size", "18px")
     .style("background-color", "var(--parchment)")
     .style("border-radius", "8px")
 
 container.append("h2")
-    .style("text-align", "center")
+    .style("text-align", "left")
+    .style("font-color", "#5a3e22")
+    .style("font-size", 18)
+    .style("font-weight", 700)
+    .style("font-family", "Uncial Antiqua, cursive")
     .text("Meet the Characters")
 
 // scroll frame
@@ -90,7 +95,7 @@ const scroll = frame.append("div")
   .attr("class", "scrollbox")
   .style("display", "flex")
   .style("gap", "20px")
-  .style("width", "90vw")
+  .style("width", "89%")
   .style("height", "70vh")
   .style("overflow-x", "auto")
   .style("border", "2px solid var(--ink-faded)")
@@ -133,7 +138,8 @@ cards.append("h3")
 cards.append("p")
   .html(d => `Nationality: <span style="font-weight:bold;">${d.nationality}</span>`)
   .style("margin-bottom", "4px")
-  .style("color", "#555");
+  .style("opacity", 0.5)
+  .style("color", "#5a3e22");
 
 // description
 cards.append("p")

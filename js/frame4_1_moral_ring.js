@@ -65,7 +65,7 @@
       .append("div")
       .attr("class", "col text-center") 
       .append("h2")
-      .text("Characters Growth Throughout the Show");
+      .text("Character Growth Throughout the Show");
 
     // element legend constants
 		const elements = [
