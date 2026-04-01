@@ -21,6 +21,7 @@ html, body {
 	padding: 0;
 	overflow-y: auto;
 }
+
 .vignette {
 	position: fixed;
 	top: 0;
