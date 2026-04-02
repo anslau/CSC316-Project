@@ -9,13 +9,13 @@
 	--parchment-lt: #f0e6cc;
 	--ink:          #2c1f0e;
 	--ink-faded:    #5a3e22;
-	--ink-ghost:    rgba(44,31,14,0.22);
+	--ink-ghost:    rgb(44 31 14 / 22%);
 }
 
 /* ── PAGE ── */
 html, body {
 	background-color: var(--parchment) !important;
-	font-family: 'Philosopher', serif;
+	font-family: Philosopher, serif;
 	color: var(--ink);
 	margin: 0;
 	padding: 0;
@@ -28,13 +28,13 @@ html, body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	box-shadow: 0 0 200px rgba(0,0,0,0.6) inset;
+	box-shadow: 0 0 200px rgb(0 0 0 / 60%) inset;
 	pointer-events: none; /* Allows clicks to pass through */
 	z-index: 9999; /* Ensures it stays on top */
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Uncial Antiqua', cursive;
+	font-family: Uncial Antiqua, cursive;
 	color: var(--ink-faded);
 	letter-spacing: 0.06em;
 }
@@ -108,7 +108,7 @@ svg {
 }
 
 .bubble:hover {
-	filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+	filter: drop-shadow(0 0 8px rgb(0 0 0 / 40%));
 }
 
 /* Chart title */
@@ -173,20 +173,20 @@ svg {
 
 /* Frame 4: Character */
 #frame4_1 {
-    font-family: 'Uncial Antiqua', cursive;
+	font-family: Uncial Antiqua, cursive;
 }
 
 .scrollbox::-webkit-scrollbar {
-  width: 0px;
+	width: 0;
 }
 
 .scrollbox:hover::-webkit-scrollbar {
-  width: 6px;
+	width: 6px;
 }
 
 .scrollbox::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.35);
-  border-radius: 6px;
+	background: rgb(0 0 0 / 35%);
+	border-radius: 6px;
 }
 
 
@@ -204,8 +204,7 @@ svg {
 	justify-content: center;
 	gap: 10px;
 	flex-wrap: wrap;
-	flex-direction: row;
-	margin: 0 auto 16px auto;
+	margin: 0 auto 16px;
 	max-width: 1400px;
 	width: 100%;
 }
@@ -215,8 +214,8 @@ svg {
 	border: 1.5px solid;
 	border-radius: 3px;
 	cursor: pointer;
-	background: rgba(255,255,255,0.3);
-	font-family: 'Uncial Antiqua', cursive;
+	background: rgb(255 255 255 / 30%);
+	font-family: Uncial Antiqua, cursive;
 	font-size: 12px;
 	letter-spacing: 0.05em;
 	transition: opacity 0.2s, transform 0.15s;
@@ -252,7 +251,7 @@ svg {
 	border: 1px solid var(--ink-ghost);
 	border-radius: 4px;
 	padding: 12px 14px;
-	box-shadow: 2px 4px 14px rgba(44,31,14,0.2);
+	box-shadow: 2px 4px 14px rgb(44 31 14 / 20%);
 }
 
 #atla-tt-label {
@@ -263,7 +262,7 @@ svg {
 }
 
 #atla-tt-title {
-	font-family: 'Uncial Antiqua', cursive;
+	font-family: Uncial Antiqua, cursive;
 	font-size: 13px;
 	color: var(--ink);
 	margin: 0 0 8px;
@@ -295,9 +294,9 @@ svg {
 	height: 28px;
 	border: 1.5px solid var(--ink-faded);
 	border-radius: 50%;
-	background: rgba(255,255,255,0.3);
+	background: rgb(255 255 255 / 30%);
 	color: var(--ink-faded);
-	font-family: 'Uncial Antiqua', cursive;
+	font-family: Uncial Antiqua, cursive;
 	font-size: 16px;
 	font-weight: bold;
 	cursor: pointer;
@@ -308,12 +307,12 @@ svg {
 
 .atla-help-icon:hover {
 	transform: translateY(-1px);
-	background: rgba(255,255,255,0.5);
+	background: rgb(255 255 255 / 50%);
 }
 
 .atla-help-icon.active {
-	background: rgba(255,255,255,0.6);
-	box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+	background: rgb(255 255 255 / 60%);
+	box-shadow: inset 0 1px 3px rgb(0 0 0 / 20%);
 }
 
 /* instructional tooltips on chart */
@@ -335,9 +334,9 @@ svg {
 }
 
 .brush .selection {
-	stroke: #ffffff;
+	stroke: #fff;
 	stroke-width: 1.5;
-	fill: rgba(90, 62, 34, 0.45);
+	fill: rgb(90 62 34 / 45%);
 	opacity: 1;
 }
 
@@ -349,8 +348,7 @@ svg {
 #atla-stats-panel {
 	line-height: 1.6;
 	font-size: 13px;
-	box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-	margin-left: auto;
-	margin-right: auto;
+	box-shadow: 2px 2px 6px rgb(0 0 0 / 20%);
+	margin: 0 auto;
 }
 

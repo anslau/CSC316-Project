@@ -7,7 +7,7 @@
 (function () {
   const MORAL_DATA_PATH = "data/processed/moral_counts_tidy.csv";
   const TRAIT_DATA_PATH = "data/processed/character_traits.json";
-  const DIV_ID = "#frame4_1";
+const DIV_ID = "#frame4-1";
 
   // Overall layout sizes
   const WIDTH = 750;
