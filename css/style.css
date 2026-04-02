@@ -9,25 +9,26 @@
 	--parchment-lt: #f0e6cc;
 	--ink:          #2c1f0e;
 	--ink-faded:    #5a3e22;
-	--ink-ghost:    rgba(44,31,14,0.22);
+	--ink-ghost:    rgb(44 31 14 / 22%);
 }
 
 /* ── PAGE ── */
 html, body {
 	background-color: var(--parchment) !important;
-	font-family: 'Philosopher', serif;
+	font-family: Philosopher, serif;
 	color: var(--ink);
 	margin: 0;
 	padding: 0;
 	overflow-y: auto;
 }
+
 .vignette {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	box-shadow: 0 0 200px rgba(0,0,0,0.6) inset;
+	box-shadow: 0 0 200px rgb(0 0 0 / 60%) inset;
 	pointer-events: none; /* Allows clicks to pass through */
 	z-index: 9999; /* Ensures it stays on top */
 }
@@ -56,10 +57,16 @@ h1, h2, h3, h4, h5, h6 {
 	align-items: center;
 }
 
+/* Avatar Bubble Chart Styles */
+
+svg {
+	display: block;
+	margin: 0 auto;
+}
+
 #frame1 svg {
 	display: block;
 	width: 100%;
-	height: 100%;
 	height: auto;
 }
 
@@ -93,13 +100,6 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100%;
 }
 
-/* Avatar Bubble Chart Styles */
-
-svg {
-	display: block;
-	margin: 0 auto;
-}
-
 /* Bubble styles */
 .bubble {
 	cursor: pointer;
@@ -107,7 +107,7 @@ svg {
 }
 
 .bubble:hover {
-	filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+	filter: drop-shadow(0 0 8px rgb(0 0 0 / 40%));
 }
 
 /* Chart title */
@@ -163,7 +163,7 @@ svg {
 }
 
 /* Responsive design */
-@media (max-width: 1280px) {
+@media (width <= 1280px) {
 	svg {
 		max-width: 100%;
 		height: auto;
@@ -171,20 +171,23 @@ svg {
 }
 
 /* Frame 4: Character */
-#frame4_1 {
+
+/* #frame4_1 {
     font-family: 'Uncial Antiqua', cursive;
-}
+} */
 
 .scrollbox::-webkit-scrollbar {
-  width: 0px;
+  width: 0;
+  height: 0;
 }
 
 .scrollbox:hover::-webkit-scrollbar {
   width: 6px;
+  height: 8px;
 }
 
 .scrollbox::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.35);
+  background: rgb(0 0 0 / 35%);
   border-radius: 6px;
 }
 
@@ -193,7 +196,7 @@ svg {
 
 #frame6 {
 	background-color: var(--parchment);
-	padding:10px;
+	padding: 10px;
 }
 
 
@@ -202,8 +205,7 @@ svg {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
-	flex-wrap: wrap;
-	flex-direction: row;
+	flex-flow: row wrap;
 	margin-bottom: 16px;
 }
 
@@ -212,15 +214,21 @@ svg {
 	border: 1.5px solid;
 	border-radius: 3px;
 	cursor: pointer;
-	background: rgba(255,255,255,0.3);
-	font-family: 'Uncial Antiqua', cursive;
+	background: rgb(255 255 255 / 30%);
+	font-family: "Uncial Antiqua", cursive;
 	font-size: 12px;
 	letter-spacing: 0.05em;
 	transition: opacity 0.2s, transform 0.15s;
 }
 
-.atla-btn:hover   { transform: translateY(-1px); }
-.atla-btn.inactive { opacity: 0.35; background: transparent; }
+.atla-btn:hover {
+	transform: translateY(-1px);
+}
+
+.atla-btn.inactive {
+	opacity: 0.35;
+	background: transparent;
+}
 
 /* chart  */
 #atla-vis {
@@ -240,14 +248,16 @@ svg {
 	max-width: 280px;
 }
 
-#atla-tooltip.visible { opacity: 1; }
+#atla-tooltip.visible {
+	opacity: 1;
+}
 
 .atla-tt-inner {
 	background: var(--parchment-lt);
 	border: 1px solid var(--ink-ghost);
 	border-radius: 4px;
 	padding: 12px 14px;
-	box-shadow: 2px 4px 14px rgba(44,31,14,0.2);
+	box-shadow: 2px 4px 14px rgb(44 31 14 / 20%);
 }
 
 #atla-tt-label {
@@ -258,7 +268,7 @@ svg {
 }
 
 #atla-tt-title {
-	font-family: 'Uncial Antiqua', cursive;
+	font-family: "Uncial Antiqua", cursive;
 	font-size: 13px;
 	color: var(--ink);
 	margin: 0 0 8px;
