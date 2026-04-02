@@ -57,6 +57,13 @@ h1, h2, h3, h4, h5, h6 {
 	align-items: center;
 }
 
+/* Avatar Bubble Chart Styles */
+
+svg {
+	display: block;
+	margin: 0 auto;
+}
+
 #frame1 svg {
 	display: block;
 	width: 100%;
@@ -91,13 +98,6 @@ h1, h2, h3, h4, h5, h6 {
 	align-items: flex-start;
 	gap: 40px;
 	width: 100%;
-}
-
-/* Avatar Bubble Chart Styles */
-
-svg {
-	display: block;
-	margin: 0 auto;
 }
 
 /* Bubble styles */
@@ -168,7 +168,7 @@ svg {
 		max-width: 100%;
 		height: auto;
 	}
-}  
+}
 
 /* Frame 4: Character */
 /* #frame4_1 {
@@ -186,7 +186,7 @@ svg {
 }
 
 .scrollbox::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.35);
+  background: rgb(0 0 0 / 35%);
   border-radius: 6px;
 }
 
@@ -214,7 +214,7 @@ svg {
 	border-radius: 3px;
 	cursor: pointer;
 	background: rgb(255 255 255 / 30%);
-	font-family: Uncial Antiqua, cursive;
+	font-family: "Uncial Antiqua", cursive;
 	font-size: 12px;
 	letter-spacing: 0.05em;
 	transition: opacity 0.2s, transform 0.15s;
@@ -267,7 +267,7 @@ svg {
 }
 
 #atla-tt-title {
-	font-family: Uncial Antiqua, cursive;
+	font-family: "Uncial Antiqua", cursive;
 	font-size: 13px;
 	color: var(--ink);
 	margin: 0 0 8px;
