@@ -62,5 +62,5 @@ const data = [
     {chapter_num:21,balance:14,destiny:9,war:41,redemption:9,book:"Fire"},
 ];
 
-const timeline = new Timeline(data, {mountId: "frame6"});
+const timeline = new Timeline(data, {mountId: "frame6", width: 1400, height: 700});
 timeline.initVis();
