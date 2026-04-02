@@ -44,15 +44,35 @@
   let hiddenGroup = null;
   let titleLabel = null;
 
+  // Animates a text element counting up from 0 to targetCount
+  function animateCount(textEl, targetCount, duration) {
+    var start = null;
+    var current = { value: 0 };
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      var progress = Math.min((timestamp - start) / duration, 1);
+      var val = Math.round(progress * targetCount);
+      textEl.text(val + " mentions");
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   // Re-renders dots for all four elements given a counts object {water, earth, fire, air}
   function renderDots(counts) {
     ELEMENTS.forEach(function (element) {
       const count = counts[element.key] || 0;
 
-      countLabels[element.key].text(count + " mentions");
       dotsGroups[element.key].selectAll("circle").remove();
 
-      if (count === 0) return;
+      if (count === 0) {
+        countLabels[element.key].text("0 mentions");
+        return;
+      }
+
+      // Count-up animation on the number
+      var totalDotTime = count * CONFIG.animationStagger + CONFIG.animationDuration;
+      animateCount(countLabels[element.key], count, Math.min(totalDotTime, 2500));
 
       const dots = generateDotsInPath(hiddenPaths[element.key], count);
 
@@ -66,6 +86,9 @@
         .attr("r", 0)
         .attr("fill", element.color)
         .attr("opacity", CONFIG.dotOpacity)
+        .attr("stroke", element.color)
+        .attr("stroke-width", 0.7)
+        .attr("stroke-opacity", 0.6)
         .transition()
         .duration(CONFIG.animationDuration)
         .delay(function (d, i) { return i * CONFIG.animationStagger; })
@@ -220,6 +243,26 @@
       .style("display", "block")
       .style("margin", "0 auto");
 
+    // Glow filters (one per element so each gets its own color)
+    var defs = svg.append("defs");
+    ELEMENTS.forEach(function (el) {
+      var filter = defs.append("filter")
+        .attr("id", "glow-" + el.key)
+        .attr("x", "-50%").attr("y", "-50%")
+        .attr("width", "200%").attr("height", "200%");
+      filter.append("feGaussianBlur")
+        .attr("in", "SourceGraphic")
+        .attr("stdDeviation", 14)
+        .attr("result", "blur");
+      filter.append("feColorMatrix")
+        .attr("in", "blur")
+        .attr("type", "saturate")
+        .attr("values", "1.5");
+      var merge = filter.append("feMerge");
+      merge.append("feMergeNode");
+      merge.append("feMergeNode").attr("in", "SourceGraphic");
+    });
+
     // Title
     // svg.append("text")
     //   .attr("x", CONFIG.width / 2)
@@ -272,13 +315,21 @@
         .attr("fill", "black")
         .node();
 
+      // Glow layer behind the shape
+      group.append("path")
+        .attr("d", element.path)
+        .attr("fill", element.color)
+        .attr("fill-opacity", 0.12)
+        .attr("stroke", "none")
+        .attr("filter", "url(#glow-" + element.key + ")");
+
       // Outline
       group.append("path")
         .attr("d", element.path)
         .attr("fill", "none")
         .attr("stroke", element.color)
-        .attr("stroke-width", 1.5)
-        .attr("stroke-opacity", 0.6);
+        .attr("stroke-width", 3)
+        .attr("stroke-opacity", 0.7);
 
       // Dots group (cleared and re-populated on filter)
       dotsGroups[element.key] = group.append("g");
