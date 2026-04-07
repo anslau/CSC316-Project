@@ -11,16 +11,16 @@
                 body: 'Avatar: The Last Airbender aired on Nickelodeon from 2005 to 2008. Set across four nations — each tied to a classical element — the story follows Aang, the last surviving Airbender, on his journey to master all four elements and end a century of war.',
             },
             {
-                heading: 'The Question',
+                heading: 'Explore',
                 type: 'quote',
-                body: 'Marketed to children, yet beloved by adults worldwide — explore the magic system, conflicts, character growth and thematic arcs to understand exactly how this show transcends its target audience ',
+                body: 'Marketed to children, yet beloved by adults worldwide — explore the magic system, conflicts, character growth and thematic arcs to understand exactly how this show transcends its target audience. ',
             },
         ],
         nations: [
             { name: 'Water', desc: 'Fluid & adaptive',    color: "#4A6E82", details: "The Water Tribes value community and change. Their bending style, based on Tai Chi, emphasizes fluidity and adaptability, requiring the bender to maintain balance, energy, and coordination. In battle, Waterbending often involves turning your opponent's attack into one of your own. This style of bending can also be used as a form of healing." },
-            { name: 'Earth', desc: 'Resolute & enduring', color: "#747849", details: "Earth is an element of substance, and the people of The Earth Kingdom are strong-willed and enduring. Earthbending requires a firm stance and 'neutral jing'—the ability to wait and listen before striking. The Toph, the Avatar's blind, Earthbending master, uses her abilities to see through vibrations in the ground." },
-            { name: 'Fire',  desc: 'Driven & intense',    color: "#A35232", details: "The Fire Nation army is the main antagonist of the story. Fire is the element of power, and people of the Fire Nation are proud, ambitious and unflinching. Firebending is the only element where the bender creates their own element from internal heat and breath. They have an intense and aggressive attacking style. The first firebenders were the dragons." },
-            { name: 'Air',   desc: 'Free & spiritual',    color: "#B89B5E", details: "The Air Nomads are known for their spiritual connections and were a peaceful culture, who valued all life and tried to rise above worldly concerns. Airbending, based on Baguazhang martial arts, is a highly defensive and incredibly mobile style where the bender, if adept enough, can behave like a leaf and find the path of least resistance, slipping through any conflict to rise above their opponents." },
+            { name: 'Earth', desc: 'Resolute & enduring', color: "#747849", details: "Earth is an element of substance, and the people of The Earth Kingdom are strong-willed and enduring. Earthbending requires a firm stance and 'neutral jing'—the ability to wait and listen before striking. Toph, the Avatar's blind Earthbending master, uses her abilities to see through vibrations in the ground." },
+            { name: 'Fire',  desc: 'Driven & intense',    color: "#A35232", details: "The Fire Nation army is the main antagonist of the story. Fire is the element of power, and people of the Fire Nation are proud, ambitious and unflinching. Firebending is the only element where the bender creates their own element from internal heat and breath. They have an intense and aggressive attacking style, with their magic originating from the dragons." },
+            { name: 'Air',   desc: 'Free & spiritual',    color: "#B89B5E", details: "The Air Nomads are known for their spiritual connections and pacifist ways. Airbending, based on Baguazhang martial arts, is a highly defensive and mobile style where the bender, if adept enough, can behave like a leaf and find the path of least resistance, slipping through any conflict to rise above their opponents." },
         ],
     };
 
@@ -28,7 +28,7 @@
     const textW = W - PAD * 2;
 
     const svg = mount.append("svg")
-        .attr("viewBox", `0 0 ${W} 100`)  // height updated at end
+        .attr("viewBox", `0 0 ${W} 100`)  
         .attr("width", "100%")
         .attr("preserveAspectRatio", "xMidYMid meet");
 
