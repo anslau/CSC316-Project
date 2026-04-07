@@ -619,8 +619,58 @@ function updateMapFilter() {
     }
 }
 
+function highlightFromMap(characters, color) {
+    // Don't override an active click-filter selection
+    if (selectedCharacters.size > 0) return;
+    if (!characters || characters.length === 0) return;
+
+    const charSet = new Set(characters);
+
+    nodeElements.selectAll('.node-stroke')
+        .attr('stroke', d => charSet.has(d.id) ? color : '#e8d9b5')
+        .attr('stroke-width', d => charSet.has(d.id) ? 3 : 1.5)
+        .attr('opacity', d => charSet.has(d.id) ? 1 : 0.95);
+
+    nodeElements.selectAll('.node-ring')
+        .attr('opacity', d => charSet.has(d.id) ? 1 : 0.25);
+
+    nodeElements.selectAll('.node-image')
+        .attr('opacity', d => charSet.has(d.id) ? 1 : 0.25);
+
+    linkElements
+        .attr('stroke', l => {
+            const bothInFight = charSet.has(l.source.id) && charSet.has(l.target.id);
+            return bothInFight ? color : 'rgba(44,31,14,0.08)';
+        })
+        .attr('stroke-opacity', l => {
+            const bothInFight = charSet.has(l.source.id) && charSet.has(l.target.id);
+            return bothInFight ? 0.85 : 0.08;
+        });
+}
+
+function clearMapHighlight() {
+    if (selectedCharacters.size > 0) return;
+
+    nodeElements.selectAll('.node-stroke')
+        .attr('stroke', '#e8d9b5')
+        .attr('stroke-width', 1.5)
+        .attr('opacity', 0.95);
+
+    nodeElements.selectAll('.node-ring')
+        .attr('opacity', 0.85);
+
+    nodeElements.selectAll('.node-image')
+        .attr('opacity', 0.98);
+
+    linkElements
+        .attr('stroke', 'rgba(44,31,14,0.18)')
+        .attr('stroke-opacity', 1);
+}
+
 window.characterNetwork = {
     create: createCharacterNetwork,
     getSelectedCharacters: () => Array.from(selectedCharacters),
-    resetFilters: resetFilters
+    resetFilters: resetFilters,
+    highlightFromMap: highlightFromMap,
+    clearMapHighlight: clearMapHighlight
 };
